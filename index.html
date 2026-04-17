@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joshua Haman — IT &amp; Cybersecurity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="interactions.css" />
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">HAMAN<span>IT</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="/Joshua_Haman_Resume.pdf" target="_blank">Résumé</a></li>
+  </ul>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+    <div class="toggle-track">
+      <div class="toggle-thumb">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun">☀️</span>
+      </div>
+    </div>
+  </button>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── MOBILE MENU ───────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about"     class="mm-link">About</a>
+  <a href="#skills"    class="mm-link">Skills</a>
+  <a href="#projects"  class="mm-link">Projects</a>
+  <a href="#services"  class="mm-link">Services</a>
+  <a href="#experience" class="mm-link">Experience</a>
+  <a href="#certifications" class="mm-link">Certifications</a>
+  <a href="/Joshua_Haman_Resume.pdf" class="mm-link" target="_blank">Résumé</a>
+  <a href="#contact"   class="mm-cta">Get in Touch →</a>
+</div>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<section class="hero" id="hero">
+  <!-- Circuit canvas lives here, behind the hero content only -->
+  <canvas id="cyber-canvas"></canvas>
+
+  <div class="hero-noise"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Houston, Texas — Open to Opportunities
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-name">
+      <span class="hero-name-line" style="--d:0s">Joshua</span>
+      <span class="hero-name-line italic" style="--d:0.08s">Haman</span>
+    </h1>
+    <div class="hero-tagline">
+      <span class="hero-tag-item" style="--d:0.20s">IT Infrastructure</span>
+      <span class="hero-tag-sep"  style="--d:0.26s">·</span>
+      <span class="hero-tag-item" style="--d:0.30s">Cybersecurity</span>
+      <span class="hero-tag-sep"  style="--d:0.36s">·</span>
+      <span class="hero-tag-item" style="--d:0.40s">Networking</span>
+    </div>
+    <p class="hero-bio" style="--d:0.50s">
+      Cybersecurity student at Texas State Technical College — passionate about how
+      technology works beneath the surface, from secure infrastructure to the systems
+      that protect them.
+    </p>
+    <div class="hero-actions" style="--d:0.62s">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact"  class="btn-ghost">Contact</a>
+      <a href="/Joshua_Haman_Resume.pdf" class="btn-ghost" target="_blank">Résumé ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+
+  <div class="hero-stat-bar">
+    <div class="hero-stat">
+      <span class="stat-num">3+</span>
+      <span class="stat-label">Years Hands-On</span>
+    </div>
+    <div class="hero-stat-div"></div>
+    <div class="hero-stat">
+      <span class="stat-num">8</span>
+      <span class="stat-label">Technical Skills</span>
+    </div>
+    <div class="hero-stat-div"></div>
+    <div class="hero-stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Roles &amp; Internships</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ─────────────────────────────────────────────────── -->
+<section class="about section-pad" id="about">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="about-grid">
+      <div class="about-headline">
+        <h2>Building a foundation in IT infrastructure &amp; cybersecurity through education, certifications, and hands-on technical projects.</h2>
+      </div>
+      <div class="about-body">
+        <p>I'm Joshua Haman, an IT and Cybersecurity student at <strong>Texas State Technical College</strong> based in Houston, Texas. I'm fascinated by how technology works beneath the surface — from networks and infrastructure to the security systems that protect them.</p>
+        <p>Cybersecurity and networking interest me because they combine logic, investigation, and real-world impact. I'm driven by curiosity and a desire to understand the bigger picture behind the technology we rely on every day.</p>
+        <div class="about-details">
+          <div class="about-detail-item">
+            <span class="detail-label">Education</span>
+            <span class="detail-value">IT &amp; Cybersecurity — Texas State Technical College</span>
+          </div>
+          <div class="about-detail-item">
+            <span class="detail-label">Experience</span>
+            <span class="detail-value">Technical Support · Consulting · Hardware · Network Diagnostics</span>
+          </div>
+          <div class="about-detail-item">
+            <span class="detail-label">Focus Areas</span>
+            <span class="detail-value">Cyber Security &amp; Networking · Technical Problem Solving</span>
+          </div>
+          <div class="about-detail-item">
+            <span class="detail-label">Status</span>
+            <span class="detail-value status-open">
+              <span class="status-dot"></span>Seeking new opportunities
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ─────────────────────────────────────────────────── -->
+<section class="skills section-pad" id="skills">
+  <div class="container">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">Technical Proficiencies</h2>
+    <p class="section-sub">Eight core areas of expertise built through education and hands-on work.</p>
+    <div class="skills-grid">
+
+      <div class="skill-card" data-index="0">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg></div>
+        <h3>IT Support</h3>
+        <ul>
+          <li>Hardware diagnostics &amp; repair</li>
+          <li>OS troubleshooting</li>
+          <li>Software configuration</li>
+          <li>Performance optimization</li>
+          <li>Device setup &amp; migration</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="1">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Cybersecurity</h3>
+        <ul>
+          <li>Network security principles</li>
+          <li>Firewall configuration</li>
+          <li>Vulnerability assessment</li>
+          <li>Security auditing</li>
+          <li>Incident response</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="2">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Networking</h3>
+        <ul>
+          <li>Network topology design</li>
+          <li>VLANs &amp; subnetting</li>
+          <li>Router &amp; switch config</li>
+          <li>Packet analysis (Wireshark)</li>
+          <li>Secure architecture</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="3">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M8 21h8M12 17v4"/></svg></div>
+        <h3>PC Building</h3>
+        <ul>
+          <li>Custom PC assembly</li>
+          <li>Hardware compatibility</li>
+          <li>Cooling &amp; optimization</li>
+          <li>BIOS &amp; firmware updates</li>
+          <li>GPU/CPU tuning</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="4">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+        <h3>Documentation</h3>
+        <ul>
+          <li>Network &amp; rack diagrams</li>
+          <li>Technical reporting</li>
+          <li>Lab &amp; audit docs</li>
+          <li>Infrastructure planning</li>
+          <li>Visual diagramming</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="5">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Communication</h3>
+        <ul>
+          <li>Simplifying tech concepts</li>
+          <li>Client consultation</li>
+          <li>Conflict resolution</li>
+          <li>Active listening</li>
+          <li>Solution planning</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="6">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+        <h3>Automation</h3>
+        <ul>
+          <li>AI workflow integration</li>
+          <li>Website automation</li>
+          <li>Process optimization</li>
+          <li>System integration</li>
+          <li>Efficiency-focused design</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="7">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Consulting</h3>
+        <ul>
+          <li>Tech market opportunities</li>
+          <li>Small biz IT consulting</li>
+          <li>Service structuring</li>
+          <li>Business automation</li>
+          <li>Scalable tech strategy</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ───────────────────────────────────────────────── -->
+<section class="projects section-pad" id="projects">
+  <div class="container">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">Technical Projects</h2>
+    <p class="section-sub">Hands-on cybersecurity and IT projects demonstrating practical skills in secure infrastructure, networking, and development.</p>
+    <div class="projects-list">
+
+      <a href="projects/homelab.html" class="project-row">
+        <div class="project-num">01</div>
+        <div class="project-info">
+          <h3>Virtualized IT &amp; Security Home Lab</h3>
+          <p>Built a virtualized lab environment to simulate enterprise networks and practice cybersecurity and infrastructure management.</p>
+          <div class="project-tags">
+            <span>VMware</span><span>Windows Server</span><span>Kali Linux</span>
+            <span>Active Directory</span><span>Networking</span>
+          </div>
+        </div>
+        <div class="project-key-learning">
+          <span class="kl-label">Key Learning</span>
+          <span class="kl-text">Network segmentation, Active Directory administration, firewall configuration, and security tool deployment.</span>
+        </div>
+        <div class="project-arrow">→</div>
+      </a>
+
+      <a href="projects/network-scanner.html" class="project-row">
+        <div class="project-num">02</div>
+        <div class="project-info">
+          <h3>Custom PC Builds &amp; Hardware Optimization</h3>
+          <p>Designed and assembled custom desktop systems focused on performance, reliability, and efficient hardware configuration.</p>
+          <div class="project-tags">
+            <span>PC Hardware</span><span>System Building</span><span>Troubleshooting</span>
+            <span>BIOS</span><span>Performance Optimization</span>
+          </div>
+        </div>
+        <div class="project-key-learning">
+          <span class="kl-label">Key Learning</span>
+          <span class="kl-text">Hardware diagnostics, BIOS configuration, component compatibility, and system performance optimization.</span>
+        </div>
+        <div class="project-arrow">→</div>
+      </a>
+
+      <a href="projects/portfolio-website.html" class="project-row">
+        <div class="project-num">03</div>
+        <div class="project-info">
+          <h3>HAMAN IT Portfolio Website</h3>
+          <p>Designed and deployed a personal technical portfolio to showcase projects, skills, and technical work.</p>
+          <div class="project-tags">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>GitHub Pages</span>
+          </div>
+        </div>
+        <div class="project-key-learning">
+          <span class="kl-label">Key Learning</span>
+          <span class="kl-text">Responsive frontend design, Git version control, and static site deployment.</span>
+        </div>
+        <div class="project-arrow">→</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ───────────────────────────────────────────────── -->
+<section class="services section-pad" id="services">
+  <div class="container">
+    <div class="section-label">Services</div>
+    <h2 class="section-title">What I Offer</h2>
+    <p class="section-sub">I occasionally help individuals and small businesses with technology projects.</p>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h3>AI Consulting Services</h3>
+        <p>AI-powered automation solutions that handle repetitive tasks, manage workflows, and help businesses operate more efficiently.</p>
+        <span class="service-price">Pricing varies</span>
+        <span class="service-cta">Inquire →</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.4"/><path stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M3 9h18M9 21V9"/></svg></div>
+        <h3>Small Business Websites</h3>
+        <p>Clean, modern websites built for small businesses that need a professional web presence to attract customers.</p>
+        <span class="service-price">Pricing varies</span>
+        <span class="service-cta">Inquire →</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3>Basic IT Consulting</h3>
+        <p>Technology guidance including network setup, security recommendations, and infrastructure planning.</p>
+        <span class="service-price">Hourly rate</span>
+        <span class="service-cta">Inquire →</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-icon"><svg width="28" height="28" fill="none" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><path stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M8 21h8M12 17v4"/></svg></div>
+        <h3>Computer Troubleshooting</h3>
+        <p>Diagnose and resolve hardware and software issues, optimize performance, and recover data from failing devices.</p>
+        <span class="service-price">Per project</span>
+        <span class="service-cta">Inquire →</span>
+      </div>
+
+    </div>
+    <div class="services-cta-bar">
+      <p>Need help with a website or a technical issue? I'd be happy to discuss how I can help.</p>
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ─────────────────────────────────────────────── -->
+<section class="experience section-pad" id="certifications">
+  <div class="container">
+    <div class="section-label">Credentials</div>
+    <h2 class="section-title">Licenses &amp; Certifications</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Mar 2026</span>
+          <span class="timeline-badge">NVIDIA</span>
+        </div>
+        <div class="timeline-content">
+          <h3>AI Infrastructure and Operations Fundamentals <span class="timeline-sep">—</span> <span class="timeline-company">NVIDIA</span></h3>
+          <span class="timeline-location">Credential ID: JQZDNM1UUX6C</span>
+          <ul class="timeline-bullets">
+            <li>Covers AI infrastructure fundamentals including GPU computing, CUDA, and GPGPU workloads</li>
+            <li>Skills: CUDA, GPGPU, AI Infrastructure, GPU Operations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Feb 2026</span>
+          <span class="timeline-badge">Anthropic</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Building with the Claude API <span class="timeline-sep">—</span> <span class="timeline-company">Anthropic</span></h3>
+          <span class="timeline-location">Credential ID: r3xiacmdarbj</span>
+          <ul class="timeline-bullets">
+            <li>Practical certification in building applications and integrations using the Claude API</li>
+            <li>Skills: Large Language Models (LLM), AI Automation, Prompt Engineering</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">May 2022</span>
+          <span class="timeline-badge">Autodesk</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Autodesk Certified User <span class="timeline-sep">—</span> <span class="timeline-company">Autodesk</span></h3>
+          <span class="timeline-location">Fusion 360 &amp; Moldflow</span>
+          <ul class="timeline-bullets">
+            <li>Certified proficiency in Autodesk Fusion 360 and Moldflow for design and simulation workflows</li>
+            <li>Skills: Architectural Design, Revit, 3D Modeling</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="experience section-pad" id="experience">
+  <div class="container">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">Work History</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Dec 2025 — Present</span>
+          <span class="timeline-badge current">Current</span>
+        </div>
+        <div class="timeline-content">
+          <h3>AI Model Trainer <span class="timeline-sep">—</span> <span class="timeline-company">Outlier AI</span></h3>
+          <span class="timeline-location">Remote · Contract</span>
+          <ul class="timeline-bullets">
+            <li>Evaluate, rate, and provide structured feedback on AI-generated content to improve model accuracy and output quality</li>
+            <li>Apply technical judgment and domain knowledge to identify errors, inconsistencies, and areas for improvement in model responses</li>
+            <li>Produce clear technical documentation supporting training pipeline reliability and quality control workflows</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Nov 2025 — Present</span>
+          <span class="timeline-badge current">Current</span>
+        </div>
+        <div class="timeline-content">
+          <h3>AI Training Data Analyst <span class="timeline-sep">—</span> <span class="timeline-company">Handshake</span></h3>
+          <span class="timeline-location">United States · Remote · Contract</span>
+          <ul class="timeline-bullets">
+            <li>Reviewed and validated AI training data to ensure accuracy, consistency, and adherence to quality standards</li>
+            <li>Identified errors and edge cases while following structured review workflows and meeting performance benchmarks</li>
+            <li>Documented findings clearly to support reliable training outcomes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Oct 2024 — Present</span>
+          <span class="timeline-badge current">Current</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Consultation &amp; Repair Agent <span class="timeline-sep">—</span> <span class="timeline-company">Geek Squad · Best Buy</span></h3>
+          <span class="timeline-location">Greater Houston · On-site</span>
+          <ul class="timeline-bullets">
+            <li>Provide customer-facing diagnostics, technical support, and clear repair recommendations</li>
+            <li>Troubleshoot hardware and software issues across laptops, desktops, and peripherals</li>
+            <li>Support repair workflows including device setup, OS troubleshooting, and performance optimization</li>
+            <li>Communicate technical findings to non-technical customers and recommend security best practices</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Feb 2024 — Jul 2024</span>
+          <span class="timeline-badge">Internship</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Help Desk Technician <span class="timeline-sep">—</span> <span class="timeline-company">Brookside Realty, LLC</span></h3>
+          <span class="timeline-location">Greater Houston · Hybrid</span>
+          <ul class="timeline-bullets">
+            <li>Delivered technical support by troubleshooting network connectivity and resolving software-related problems</li>
+            <li>Configured and maintained desktops and mobile devices to ensure smooth operations</li>
+            <li>Assisted with provisioning, updates, and user support for day-to-day business needs</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ────────────────────────────────────────────────── -->
+<section class="contact section-pad" id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid">
+
+      <div class="contact-left">
+        <h2>Let's<br/><em>Connect</em></h2>
+        <p>Have a project in mind or need IT help? Feel free to reach out. I'm always open to discussing new opportunities and technical challenges.</p>
+        <div class="contact-links">
+          <a href="mailto:joshham364@gmail.com" class="contact-link-item">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M22 6l-10 7L2 6"/></svg>
+            joshham364@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/joshua-haman-478b462b4" target="_blank" class="contact-link-item">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+            joshua-haman-478b462b4
+          </a>
+          <a href="https://github.com/SenorCyB" target="_blank" class="contact-link-item">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            SenorCyB
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project or question..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary form-submit">Send Message →</button>
+          <div class="form-success" id="formSuccess">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"/></svg>
+            Message ready — if your email client didn't open, email joshham364@gmail.com directly.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <a href="#" class="footer-logo">HAMAN<span>IT</span></a>
+    <nav class="footer-nav">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="footer-copy">© 2026 HAMAN IT. Built by Joshua Haman. Houston, Texas.</p>
+  </div>
+</footer>
+
+<!-- ── Scroll progress wheel ──────────────────────────────────── -->
+<div id="scroll-wheel" aria-hidden="true">
+  <svg viewBox="0 0 36 36">
+    <circle class="scroll-wheel-track" cx="18" cy="18" r="15.9"/>
+    <circle class="scroll-wheel-fill"  cx="18" cy="18" r="15.9"/>
+  </svg>
+  <span id="scroll-pct">0</span>
+</div>
+
+<!-- ── Cursor elements ────────────────────────────────────────── -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ── Scripts ───────────────────────────────────────────────── -->
+<script>
+  /* Theme toggle — runs immediately to prevent flash */
+  (function () {
+    var root  = document.documentElement;
+    var saved = localStorage.getItem('hamanit-theme') || 'dark';
+    root.setAttribute('data-theme', saved);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var btn = document.getElementById('themeToggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('hamanit-theme', next);
+      });
+    });
+  }());
+
+  /* Nav scroll shrink */
+  window.addEventListener('scroll', function () {
+    var nav = document.getElementById('nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* Hamburger / mobile menu */
+  document.addEventListener('DOMContentLoaded', function () {
+    var hamburger  = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function () {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+        });
+      });
+    }
+
+    /* Scroll reveal */
+    var revealEls = document.querySelectorAll('.skill-card, .project-row, .service-card, .timeline-item');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function (el) { io.observe(el); });
+
+    /* Service cards → scroll to contact */
+    var contact = document.getElementById('contact');
+    document.querySelectorAll('.service-card').forEach(function (card) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function () {
+        if (contact) contact.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    /* Contact form */
+    var form = document.getElementById('contactForm');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name    = document.getElementById('name').value;
+        var email   = document.getElementById('email').value;
+        var message = document.getElementById('message').value;
+        var subject = encodeURIComponent('Portfolio Contact from ' + name);
+        var body    = encodeURIComponent('From: ' + name + '\nEmail: ' + email + '\n\n' + message);
+        window.location.href = 'mailto:joshham364@gmail.com?subject=' + subject + '&body=' + body;
+        var success = document.getElementById('formSuccess');
+        if (success) success.classList.add('show');
+      });
+    }
+  });
+</script>
+
+<script src="interactions.js" defer></script>
+
+<style>
+  /* ── Scroll progress wheel ── */
+  #scroll-wheel {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    width: 48px; height: 48px;
+    z-index: 200;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  #scroll-wheel.visible { opacity: 1; transform: scale(1); }
+  #scroll-wheel svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .scroll-wheel-track {
+    fill: none;
+    stroke: var(--border2);
+    stroke-width: 2.5;
+  }
+  .scroll-wheel-fill {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    transition: stroke-dashoffset 0.1s linear;
+    filter: drop-shadow(0 0 4px var(--accent));
+  }
+  #scroll-pct {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ff-mono);
+    font-size: 9px; font-weight: 600;
+    color: var(--accent); letter-spacing: -0.02em;
+  }
+  @media (max-width: 600px) {
+    #scroll-wheel { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+  }
+</style>
+<script>
+  (function () {
+    var wheel    = document.getElementById('scroll-wheel');
+    var fill     = document.querySelector('.scroll-wheel-fill');
+    var label    = document.getElementById('scroll-pct');
+    window.addEventListener('scroll', function () {
+      var pct = Math.round(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) || 0;
+      fill.style.strokeDashoffset = 100 - pct;
+      label.textContent = pct;
+      wheel.classList.toggle('visible', window.scrollY > 80);
+    }, { passive: true });
+  }());
+</script>
+</body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<script>
+  (function () {
+    var root  = document.documentElement;
+    var saved = localStorage.getItem('hamanit-theme') || 'dark';
+    root.setAttribute('data-theme', saved);
+    document.addEventListener('DOMContentLoaded', function () {
+      var btn = document.getElementById('themeToggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('hamanit-theme', next);
+      });
+    });
+  }());
+  window.addEventListener('scroll', function () {
+    var nav = document.getElementById('nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    var hamburger  = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function () {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+        });
+      });
+    }
+  });
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Lab | HAMAN IT</title>
+  <meta name="description" content="Virtualized IT &amp; Security Home Lab — VMware, Active Directory, Windows Server, and security tooling." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../interactions.css" />
+  <link rel="stylesheet" href="../project-page.css" />
+  <style>
+    .project-hero {
+      background: linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 140px 0 64px;
+      position: relative; overflow: hidden;
+    }
+    .project-hero::before {
+      content: ''; position: absolute;
+      top: -100px; right: -100px; width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,113,227,0.08), transparent 65%);
+      pointer-events: none;
+    }
+    .project-hero-inner { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .project-breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--ff-mono); font-size: 12px;
+      color: var(--faint); margin-bottom: 28px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .project-breadcrumb a { color: var(--accent); transition: opacity 0.2s; }
+    .project-breadcrumb a:hover { opacity: 0.7; }
+    .project-breadcrumb svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .project-hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+      letter-spacing: -0.04em; color: var(--text); line-height: 1.05;
+      max-width: 780px; margin-bottom: 20px;
+    }
+    .project-hero-title .hl {
+      background: linear-gradient(135deg, #0071e3, #34aadc);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .project-hero-sub { font-size: 17px; color: var(--muted); max-width: 640px; line-height: 1.75; margin-bottom: 36px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .hero-tag {
+      padding: 6px 14px; border-radius: 999px;
+      border: 1px solid var(--accent-border); background: var(--accent-dim);
+      color: var(--accent); font-family: var(--ff-mono); font-size: 12px;
+      font-weight: 500; letter-spacing: 0.04em;
+      animation: tag-pop 0.5s var(--transition) both;
+    }
+    @keyframes tag-pop {
+      from { opacity: 0; transform: scale(0.85) translateY(6px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .hero-tag:nth-child(1){animation-delay:0.2s}
+    .hero-tag:nth-child(2){animation-delay:0.3s}
+    .hero-tag:nth-child(3){animation-delay:0.4s}
+    .hero-tag:nth-child(4){animation-delay:0.5s}
+    .hero-tag:nth-child(5){animation-delay:0.6s}
+    .hero-tag:nth-child(6){animation-delay:0.7s}
+    .hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .particle {
+      position: absolute; border-radius: 50%;
+      background: rgba(0,113,227,0.12);
+      animation: float-particle linear infinite;
+    }
+    @keyframes float-particle {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+    }
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, #0071e3, #34aadc);
+      z-index: 9999; width: 0%; transition: width 0.1s linear;
+      border-radius: 0 2px 2px 0;
+    }
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 40px 0; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 24px 20px;
+      box-shadow: 0 2px 16px var(--accent-glow);
+      position: relative; overflow: hidden;
+      transition: transform 0.3s var(--transition), box-shadow 0.3s var(--transition);
+      cursor: default;
+    }
+    .stat-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: 20px;
+      background: linear-gradient(135deg, rgba(0,113,227,0.05), transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px var(--accent-glow); }
+    .stat-card:hover::after { opacity: 1; }
+    .stat-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--accent-dim); border: 1px solid var(--accent-border);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    }
+    .stat-icon svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .stat-label { font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+    .stat-value { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.4; letter-spacing: -0.01em; }
+    .project-content { max-width: 1120px; margin: 0 auto; padding: 56px 24px 80px; }
+    .detail-grid { display: grid; grid-template-columns: 1.2fr 0.9fr; gap: 20px; margin-bottom: 24px; }
+    .section-eyebrow {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--ff-mono); font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 14px;
+    }
+    .section-eyebrow::before { content: ''; display: block; width: 20px; height: 2px; border-radius: 1px; background: var(--accent); }
+    .block-title { font-size: 19px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); margin-bottom: 14px; }
+    .skill-list { gap: 12px; }
+    .skill-item { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .arch-section {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; padding: 36px;
+      box-shadow: 0 2px 16px var(--accent-glow); margin-bottom: 24px;
+    }
+    .arch-diagram { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+    .arch-node {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+      transition: transform 0.3s var(--transition), border-color 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .arch-node::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), #34aadc);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .arch-node:hover { transform: translateY(-4px); border-color: var(--accent-border); box-shadow: 0 8px 24px var(--accent-glow); }
+    .arch-node:hover::before { opacity: 1; }
+    .arch-node-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--accent-dim); border: 1px solid var(--accent-border);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+    }
+    .arch-node-icon svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .arch-node-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: -0.02em; }
+    .arch-node-role { font-family: var(--ff-mono); font-size: 11px; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .arch-node-detail { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .timeline-section {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; padding: 36px;
+      box-shadow: 0 2px 16px var(--accent-glow); margin-bottom: 24px;
+    }
+    .timeline { position: relative; padding-left: 24px; margin-top: 28px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
+      width: 2px; background: linear-gradient(180deg, var(--accent), rgba(0,113,227,0.1));
+      border-radius: 1px;
+    }
+    .timeline-item { position: relative; padding-bottom: 32px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -20px; top: 6px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    .timeline-phase { font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px; }
+    .timeline-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.02em; }
+    .timeline-text { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .techniques-section {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; padding: 36px;
+      box-shadow: 0 2px 16px var(--accent-glow); margin-bottom: 24px;
+    }
+    .technique-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; }
+    .technique-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 22px;
+      transition: transform 0.3s var(--transition), border-color 0.3s, box-shadow 0.3s;
+    }
+    .technique-card:hover { transform: translateY(-3px); border-color: var(--accent-border); box-shadow: 0 6px 20px var(--accent-glow); }
+    .technique-number { font-family: var(--ff-mono); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.2; line-height: 1; margin-bottom: 10px; letter-spacing: -0.04em; }
+    .technique-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -0.02em; }
+    .technique-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+    .tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 16px; }
+    .tool-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--bg);
+      font-size: 13px; color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tool-item:hover { border-color: var(--accent-border); color: var(--text); }
+    .tool-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .lesson-list { display: grid; gap: 14px; margin-top: 16px; }
+    .lesson-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px; border-radius: 14px;
+      background: var(--bg); border: 1px solid var(--border); transition: border-color 0.2s;
+    }
+    .lesson-item:hover { border-color: var(--accent-border); }
+    .lesson-num {
+      font-family: var(--ff-mono); font-size: 11px; font-weight: 700;
+      color: var(--accent); background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      width: 26px; height: 26px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .lesson-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .lesson-text strong { color: var(--text); font-weight: 600; }
+    .cta-card {
+      background: linear-gradient(135deg, rgba(0,113,227,0.06), rgba(52,170,220,0.06));
+      border: 1px solid rgba(0,113,227,0.15);
+      border-radius: 24px; padding: 40px 36px; margin-bottom: 32px;
+      position: relative; overflow: hidden;
+    }
+    .cta-card::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,113,227,0.08), transparent 65%);
+      pointer-events: none;
+    }
+    .cta-card-title { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); margin-bottom: 12px; position: relative; }
+    .cta-card-text { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 640px; position: relative; }
+    .build-badge {
+      padding: 4px 10px; border-radius: 999px;
+      border: 1px solid var(--accent-border); background: var(--accent-dim);
+      color: var(--accent); font-family: var(--ff-mono); font-size: 11px;
+    }
+    .anim-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
+    }
+    .anim-up.in-view { opacity: 1; transform: translateY(0); }
+    @media (max-width: 900px) {
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .detail-grid { grid-template-columns: 1fr; }
+      .arch-diagram { grid-template-columns: 1fr 1fr; }
+      .technique-grid { grid-template-columns: 1fr; }
+      .bottom-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .arch-diagram { grid-template-columns: 1fr; }
+      .project-hero { padding: 120px 0 48px; }
+      .cta-card { padding: 28px 22px; }
+      .tool-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<nav class="nav" id="nav">
+  <a href="../index.html" class="nav-logo">HAMAN<span>IT</span></a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#skills">Skills</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../index.html#services">Services</a></li>
+    <li><a href="../index.html#experience">Experience</a></li>
+    <li><a href="../Joshua_Haman_Resume.pdf" target="_blank">R&#233;sum&#233;</a></li>
+  </ul>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+    <div class="toggle-track"><div class="toggle-thumb"><span class="icon-moon">&#127769;</span><span class="icon-sun">&#9728;&#65039;</span></div></div>
+  </button>
+  <a href="../index.html#contact" class="nav-cta">Get in Touch</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="../index.html#about"      class="mm-link">About</a>
+  <a href="../index.html#skills"     class="mm-link">Skills</a>
+  <a href="../index.html#projects"   class="mm-link">Projects</a>
+  <a href="../index.html#services"   class="mm-link">Services</a>
+  <a href="../index.html#experience" class="mm-link">Experience</a>
+  <a href="../Joshua_Haman_Resume.pdf" class="mm-link" target="_blank">R&#233;sum&#233;</a>
+  <a href="../index.html#contact"    class="mm-cta">Get in Touch &#8594;</a>
+</div>
+
+<main>
+  <header class="project-hero">
+    <div class="hero-particles" id="hero-particles"></div>
+    <div class="project-hero-inner">
+      <nav class="project-breadcrumb">
+        <a href="../index.html">Home</a>
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        <a href="../index.html#projects">Projects</a>
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        <span>Home Lab</span>
+      </nav>
+      <h1 class="project-hero-title">
+        Virtualized IT &amp;<br><span class="hl">Security Home Lab</span>
+      </h1>
+      <p class="project-hero-sub">
+        A VMware-based enterprise simulation built from the ground up to develop real-world IT and cybersecurity skills &#8212; running Windows Server 2019, Active Directory, Kali Linux, and security tooling in a deliberately breakable, fully isolated environment.
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag">VMware Workstation</span>
+        <span class="hero-tag">Windows Server 2019</span>
+        <span class="hero-tag">Active Directory</span>
+        <span class="hero-tag">Kali Linux</span>
+        <span class="hero-tag">DNS / DHCP</span>
+        <span class="hero-tag">Group Policy</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="project-hero-inner" style="margin: 0 auto; max-width: 1120px; padding: 0 24px;">
+    <div class="stat-row anim-up">
+      <div class="stat-card" tabindex="0">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div class="stat-label">Platform</div>
+        <div class="stat-value">VMware Workstation</div>
+      </div>
+      <div class="stat-card" tabindex="0">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        <div class="stat-label">VMs Running</div>
+        <div class="stat-value">4+ Active Machines</div>
+      </div>
+      <div class="stat-card" tabindex="0">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="stat-label">Focus</div>
+        <div class="stat-value">Security &amp; Sysadmin</div>
+      </div>
+      <div class="stat-card" tabindex="0">
+        <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="stat-label">Status</div>
+        <div class="stat-value">Ongoing / Active</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-content">
+
+    <div class="detail-grid">
+      <div class="card anim-up">
+        <div class="section-eyebrow">Overview</div>
+        <h2 class="block-title">What I Built</h2>
+        <p style="font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:20px;">
+          A multi-VM environment on VMware Workstation that mirrors a small enterprise network. The goal was deliberate, hands-on repetition with systems I would encounter in a real IT or security role &#8212; DNS failures, Group Policy misconfigurations, AD trust issues, firewall gaps &#8212; all in a place where breaking things is the whole point.
+        </p>
+        <p style="font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:20px;">
+          Instead of reading about how Active Directory works, I built it, broke it, and rebuilt it. That difference matters when you are diagnosing a production issue at 2am.
+        </p>
+        <ul class="skill-list">
+          <li class="skill-item">Deployed Windows Server 2019 and promoted it to a domain controller</li>
+          <li class="skill-item">Configured Active Directory: users, groups, OUs, and nested group policies</li>
+          <li class="skill-item">Set up DNS zones, DHCP scopes, and forward/reverse lookup records</li>
+          <li class="skill-item">Domain-joined Windows 10/11 client machines and managed them centrally via GPO</li>
+          <li class="skill-item">Introduced deliberate misconfigurations and practiced step-by-step remediation</li>
+          <li class="skill-item">Ran Kali Linux on the same isolated virtual network for attack simulation</li>
+        </ul>
+      </div>
+      <div class="card anim-up" style="animation-delay:0.1s;">
+        <div class="section-eyebrow">Lab Stack</div>
+        <h2 class="block-title">Environment</h2>
+        <ul class="skill-list" style="margin-bottom:20px;">
+          <li class="skill-item"><strong style="color:var(--text);">VMware Workstation</strong> &#8212; virtual network host and snapshot management</li>
+          <li class="skill-item"><strong style="color:var(--text);">Windows Server 2019</strong> &#8212; AD DS, DNS, DHCP, File Services</li>
+          <li class="skill-item"><strong style="color:var(--text);">Windows 10 / 11</strong> &#8212; domain-joined workstation clients</li>
+          <li class="skill-item"><strong style="color:var(--text);">Kali Linux</strong> &#8212; offensive tooling, recon, and exploitation practice</li>
+          <li class="skill-item"><strong style="color:var(--text);">Internal vNet</strong> &#8212; fully isolated NAT segments, no internet exposure</li>
+        </ul>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
+          <span class="build-badge">Active Directory</span>
+          <span class="build-badge">DNS</span>
+          <span class="build-badge">Group Policy</span>
+          <span class="build-badge">DHCP</span>
+          <span class="build-badge">Firewalls</span>
+          <span class="build-badge">Kali Linux</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-section anim-up">
+      <div class="section-eyebrow">Architecture</div>
+      <h2 class="block-title" style="margin-bottom:6px;">Network Topology</h2>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Virtual machines across two isolated network segments, mimicking a real enterprise LAN with a separated attacker node.</p>
+      <div class="arch-diagram">
+        <div class="arch-node">
+          <div class="arch-node-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div class="arch-node-name">WinServer-DC-01</div>
+          <div class="arch-node-role">Domain Controller</div>
+          <div class="arch-node-detail">Windows Server 2019 &#8212; hosts AD DS, primary DNS, DHCP. Authoritative for the hamanlab.local domain.</div>
+        </div>
+        <div class="arch-node">
+          <div class="arch-node-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <div class="arch-node-name">WinClient-01 / 02</div>
+          <div class="arch-node-role">Domain Workstations</div>
+          <div class="arch-node-detail">Windows 10 and 11 machines joined to the domain. Used for GPO testing, user privilege scenarios, and endpoint hardening.</div>
+        </div>
+        <div class="arch-node">
+          <div class="arch-node-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="arch-node-name">Kali-Attacker</div>
+          <div class="arch-node-role">Attack Node</div>
+          <div class="arch-node-detail">Kali Linux on an isolated segment. Used for network recon, brute-force testing, and vulnerability scanning against lab targets.</div>
+        </div>
+        <div class="arch-node">
+          <div class="arch-node-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+          <div class="arch-node-name">Virtual Switch / NAT</div>
+          <div class="arch-node-role">Network Segmentation</div>
+          <div class="arch-node-detail">VMware virtual switches create isolated LAN and DMZ-style segments. NAT adapter provides selective internet access for updates only.</div>
+        </div>
+        <div class="arch-node">
+          <div class="arch-node-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="arch-node-name">File &amp; Print Server</div>
+          <div class="arch-node-role">Shared Services</div>
+          <div class="arch-node-detail">Secondary Server 2019 instance running file shares and print services. Used to practice permissions, ACLs, and audit policy.</div>
+        </div>
+        <div class="arch-node">
+          <div class="arch-node-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="arch-node-name">Sysmon + Event Logs</div>
+          <div class="arch-node-role">Monitoring Layer</div>
+          <div class="arch-node-detail">Sysmon deployed on domain machines. Windows Event Forwarding sends logs to a central collector for basic SIEM-style review.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-section anim-up">
+      <div class="section-eyebrow">Build Process</div>
+      <h2 class="block-title" style="margin-bottom:6px;">How It Came Together</h2>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Each phase was driven by a specific skill gap &#8212; not a checklist. Problems came first; the infrastructure was built around solving them.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 01</div>
+          <div class="timeline-title">Bare Metal to Domain Controller</div>
+          <div class="timeline-text">Installed Windows Server 2019, configured static IP, promoted to domain controller for hamanlab.local. Set up AD DS, primary DNS zone, and DHCP scope. First real taste of what breaks when DNS is misconfigured.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 02</div>
+          <div class="timeline-title">Domain Clients and Group Policy</div>
+          <div class="timeline-text">Joined Windows 10 and 11 VMs to the domain. Created OUs for different departments, built Group Policy Objects for password policy, desktop lockdown, and software deployment. Tested GPO inheritance and blocking.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 03</div>
+          <div class="timeline-title">Deliberate Misconfigurations</div>
+          <div class="timeline-text">Introduced common real-world mistakes on purpose &#8212; weak password policies, over-permissioned users, open file shares, AS-REP roastable accounts. Then diagnosed and remediated each one using the same tools an admin would use in production.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 04</div>
+          <div class="timeline-title">Kali and Attack Simulation</div>
+          <div class="timeline-text">Added Kali Linux to an isolated segment. Ran nmap recon, performed password spraying against domain accounts, used BloodHound to map attack paths through AD. Seeing the attack from the attacker side completely changed how I thought about defense.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-phase">Phase 05 &#8212; Ongoing</div>
+          <div class="timeline-title">Monitoring and Hardening</div>
+          <div class="timeline-text">Deployed Sysmon with SwiftOnSecurity config across domain machines. Set up Windows Event Forwarding to a central collector. Now actively building detection rules and reviewing logs after each attack simulation.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="techniques-section anim-up">
+      <div class="section-eyebrow">Security Practice</div>
+      <h2 class="block-title" style="margin-bottom:6px;">What I Practiced Hands-On</h2>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Every technique below was executed in the lab &#8212; not read about, not watched in a tutorial.</p>
+      <div class="technique-grid">
+        <div class="technique-card">
+          <div class="technique-number">01</div>
+          <div class="technique-title">Active Directory Enumeration</div>
+          <div class="technique-text">Used BloodHound and ldapdomaindump to map AD structure, identify privilege escalation paths, and find misconfigured delegation settings. Practiced both attacker enumeration and defensive AD hygiene.</div>
+        </div>
+        <div class="technique-card">
+          <div class="technique-number">02</div>
+          <div class="technique-title">Password Attacks and Remediation</div>
+          <div class="technique-text">Ran AS-REP roasting against accounts with pre-auth disabled, tested password spraying with valid usernames. Then hardened with Kerberos pre-auth enforcement, fine-grained password policies, and account lockout thresholds.</div>
+        </div>
+        <div class="technique-card">
+          <div class="technique-number">03</div>
+          <div class="technique-title">Network Scanning and Firewall Rules</div>
+          <div class="technique-text">Used nmap to fingerprint the lab network from the Kali node. Identified open ports, service versions, and exposure gaps. Built Windows Firewall rules and tested them with follow-up scans to verify coverage.</div>
+        </div>
+        <div class="technique-card">
+          <div class="technique-number">04</div>
+          <div class="technique-title">Log Analysis and Incident Review</div>
+          <div class="technique-text">After each attack simulation, reviewed Sysmon event logs and Windows Security logs to reconstruct the attack chain. Focused on Event IDs 4624, 4625, 4768, 4769, 7045 &#8212; the staples of AD attack detection.</div>
+        </div>
+        <div class="technique-card">
+          <div class="technique-number">05</div>
+          <div class="technique-title">Privilege Escalation Testing</div>
+          <div class="technique-text">Tested local privilege escalation from a standard domain user. Misconfigured service permissions, writable PATH entries, and token impersonation &#8212; then locked each vector down and verified via re-test.</div>
+        </div>
+        <div class="technique-card">
+          <div class="technique-number">06</div>
+          <div class="technique-title">Snapshot-Based Break and Restore</div>
+          <div class="technique-text">Used VMware snapshots as a rollback mechanism for destructive testing. Built a discipline of pre-attack snapshots, aggressive break scenarios, log capture, and clean rollback &#8212; simulating real incident response cycles.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="card anim-up">
+        <div class="section-eyebrow">Tooling</div>
+        <h3 class="block-title">Tools Used in the Lab</h3>
+        <div class="tool-grid">
+          <div class="tool-item"><div class="tool-dot"></div>BloodHound</div>
+          <div class="tool-item"><div class="tool-dot"></div>nmap</div>
+          <div class="tool-item"><div class="tool-dot"></div>Sysmon</div>
+          <div class="tool-item"><div class="tool-dot"></div>Wireshark</div>
+          <div class="tool-item"><div class="tool-dot"></div>Impacket</div>
+          <div class="tool-item"><div class="tool-dot"></div>CrackMapExec</div>
+          <div class="tool-item"><div class="tool-dot"></div>Rubeus</div>
+          <div class="tool-item"><div class="tool-dot"></div>Event Viewer</div>
+          <div class="tool-item"><div class="tool-dot"></div>PowerShell</div>
+          <div class="tool-item"><div class="tool-dot"></div>ADUC / RSAT</div>
+        </div>
+      </div>
+      <div class="card anim-up" style="animation-delay:0.1s;">
+        <div class="section-eyebrow">Takeaways</div>
+        <h3 class="block-title">What This Lab Taught Me</h3>
+        <div class="lesson-list">
+          <div class="lesson-item">
+            <div class="lesson-num">01</div>
+            <div class="lesson-text"><strong>DNS is the foundation of everything.</strong> When it breaks, everything else breaks in confusing ways. Debugging DNS taught me more about AD than any course.</div>
+          </div>
+          <div class="lesson-item">
+            <div class="lesson-num">02</div>
+            <div class="lesson-text"><strong>Attack paths through AD are obvious once you have run them.</strong> BloodHound visualizing a path from standard user to Domain Admin changed how I think about access control permanently.</div>
+          </div>
+          <div class="lesson-item">
+            <div class="lesson-num">03</div>
+            <div class="lesson-text"><strong>Log review is a skill that requires repetition.</strong> Knowing which Event IDs matter, in what order, and what normal looks like takes time the lab provided safely.</div>
+          </div>
+          <div class="lesson-item">
+            <div class="lesson-num">04</div>
+            <div class="lesson-text"><strong>Breaking things is the fastest way to learn.</strong> Hours fixing a misconfigured GPO or broken Kerberos trust stick longer than any documentation ever will.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-card anim-up">
+      <h3 class="cta-card-title">Why This Project Matters</h3>
+      <p class="cta-card-text">
+        Most IT and security certifications teach you how things should work. This lab teaches how they actually break &#8212; and how to fix them under pressure. Every hour in this environment builds the muscle memory that matters most in a real incident. It is not a study tool. It is a practice environment built to simulate real work.
+      </p>
+    </div>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap;" class="anim-up">
+      <a class="btn-ghost" href="../index.html#projects">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        Back to Projects
+      </a>
+      <a class="btn-primary" href="mailto:joshham364@gmail.com?subject=HAMAN%20IT%20-%20Home%20Lab%20Inquiry">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Ask About This Project
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <a href="../index.html" class="footer-logo">HAMAN<span>IT</span></a>
+    <nav class="footer-nav">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#skills">Skills</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <p class="footer-copy">&#169; 2026 HAMAN IT. Built by Joshua Haman. Houston, Texas.</p>
+  </div>
+</footer>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<script src="../interactions.js" defer></script>
+<script>
+  const prog = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    prog.style.width = pct + '%';
+  }, { passive: true });
+
+  const animEls = document.querySelectorAll('.anim-up');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in-view'), i * 60);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  animEls.forEach(el => io.observe(el));
+
+  const container = document.getElementById('hero-particles');
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    const size = Math.random() * 10 + 4;
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:${-size}px;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*8}s;`;
+    container.appendChild(p);
+  }
+</script>
+</body>
+</html>

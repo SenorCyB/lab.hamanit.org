@@ -1,0 +1,286 @@
+/* ================================================================
+   HAMAN IT — interactions.css  v4
+   Cyber Dashboard Interactivity Layer
+   ================================================================ */
+
+/* ── Text selection glow ─────────────────────────────────────── */
+::selection {
+  background: rgba(107, 164, 255, 0.22);
+  color: #e2e8f5;
+  text-shadow:
+    0 0 10px rgba(107, 164, 255, 0.9),
+    0 0 22px rgba(107, 164, 255, 0.5);
+}
+[data-theme="light"] ::selection {
+  background: rgba(37, 88, 212, 0.16);
+  color: #0e1629;
+  text-shadow:
+    0 0 8px rgba(37, 88, 212, 0.6),
+    0 0 18px rgba(37, 88, 212, 0.3);
+}
+
+/* ── Hide default cursor (desktop only) ─────────────────────── */
+@media (hover: hover) {
+  *, *::before, *::after { cursor: none !important; }
+}
+
+/* ── Cyber canvas — absolute inside .hero ────────────────────── */
+#cyber-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Hero already has position:relative — just make sure
+   its children that sit ON TOP of the canvas have z-index */
+.hero-noise,
+.hero-grid-lines,
+.hero-badge,
+.hero-content,
+.hero-scroll-hint,
+.hero-stat-bar {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Custom cursor: dot ──────────────────────────────────────── */
+#cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent, #6ba4ff);
+  box-shadow: 0 0 8px var(--accent, #6ba4ff);
+  /* centering offset handled in JS — no static transform here */
+  pointer-events: none;
+  z-index: 9999;
+  transition:
+    width  0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.2s,
+    box-shadow 0.2s;
+  will-change: transform;
+}
+
+/* ── Custom cursor: outer ring ───────────────────────────────── */
+#cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent, #6ba4ff);
+  opacity: 0.65;
+  /* centering offset handled in JS — no static transform here */
+  pointer-events: none;
+  z-index: 9998;
+  transition:
+    width  0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.2s,
+    border-color 0.2s,
+    box-shadow 0.25s;
+  will-change: transform;
+}
+
+/* Hover: ring expands + glows */
+#cursor-ring.ring--hover {
+  width: 46px;
+  height: 46px;
+  opacity: 1;
+  box-shadow:
+    0 0 14px rgba(107, 164, 255, 0.35),
+    inset 0 0 8px rgba(107, 164, 255, 0.08);
+}
+[data-theme="light"] #cursor-ring.ring--hover {
+  box-shadow:
+    0 0 12px rgba(37, 88, 212, 0.28),
+    inset 0 0 8px rgba(37, 88, 212, 0.06);
+}
+
+/* Click: ring snaps in */
+#cursor-ring.ring--click {
+  width: 16px;
+  height: 16px;
+  opacity: 1;
+  border-width: 2px;
+  box-shadow: 0 0 18px var(--accent, #6ba4ff);
+}
+#cursor-dot.dot--click {
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 18px var(--accent, #6ba4ff);
+}
+
+/* Crosshair tick marks on hover */
+#cursor-ring::before,
+#cursor-ring::after {
+  content: '';
+  position: absolute;
+  background: var(--accent, #6ba4ff);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+#cursor-ring::before {
+  width: 1px; height: 6px;
+  top: -9px; left: 50%;
+  transform: translateX(-50%);
+}
+#cursor-ring::after {
+  width: 6px; height: 1px;
+  left: -9px; top: 50%;
+  transform: translateY(-50%);
+}
+#cursor-ring.ring--hover::before,
+#cursor-ring.ring--hover::after { opacity: 0.5; }
+
+/* ── Click ripple ────────────────────────────────────────────── */
+.click-ripple {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent, #6ba4ff);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9997;
+  animation: ripple-out 0.55s ease-out forwards;
+}
+@keyframes ripple-out {
+  from { width: 0;    height: 0;    opacity: 0.65; }
+  to   { width: 80px; height: 80px; opacity: 0;    }
+}
+
+/* ── Card scan-line sweep ────────────────────────────────────── */
+.skill-card,
+.service-card { overflow: hidden; }
+
+.card-sweep {
+  position: absolute;
+  top: -60%;
+  left: 0; right: 0;
+  height: 60%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(107, 164, 255, 0.065) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+}
+[data-theme="light"] .card-sweep {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(37, 88, 212, 0.05) 50%,
+    transparent 100%
+  );
+}
+.skill-card:hover .card-sweep,
+.service-card:hover .card-sweep {
+  opacity: 1;
+  animation: card-sweep-down 0.7s ease forwards;
+}
+@keyframes card-sweep-down {
+  from { top: -60%; }
+  to   { top: 110%; }
+}
+
+/* ── Section label: letter-spread on hover ───────────────────── */
+.section-label { transition: letter-spacing 0.25s ease; }
+.section-label:hover { letter-spacing: 0.24em; }
+
+/* ── Nav link hover dot indicator ───────────────────────────── */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 50%;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateX(-50%) scale(0);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.nav-links a:hover::after { transform: translateX(-50%) scale(1); }
+
+/* ── Contact item: left-border reveal ───────────────────────── */
+.contact-link-item { position: relative; overflow: hidden; }
+.contact-link-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+.contact-link-item:hover::before { transform: scaleY(1); }
+
+/* ── Project row: left-edge accent ──────────────────────────── */
+.project-row { position: relative; }
+.project-row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.35s ease;
+}
+.project-row:hover::before { transform: scaleY(1); }
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg, #080e1c); }
+::-webkit-scrollbar-thumb {
+  background: var(--border2, rgba(100, 140, 255, 0.22));
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent, #6ba4ff); }
+
+/* ── Focus ring ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Timeline dot: expands on row hover ─────────────────────── */
+.timeline-item::before { transition: box-shadow 0.3s ease; }
+.timeline-item:hover::before {
+  box-shadow:
+    0 0 0 4px var(--accent-dim),
+    0 0 16px rgba(107, 164, 255, 0.5);
+}
+
+/* ── Stat number: glow after count-up ───────────────────────── */
+.stat-num.counted {
+  text-shadow: 0 0 20px rgba(107, 164, 255, 0.35);
+}
+[data-theme="light"] .stat-num.counted {
+  text-shadow: 0 0 16px rgba(37, 88, 212, 0.25);
+}
+
+/* ── Hero badge pulse ────────────────────────────────────────── */
+.hero-badge {
+  animation: fadeUp 0.7s ease both, badge-pulse 4s ease 1.5s infinite;
+}
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50%       { box-shadow: 0 0 0 3px var(--accent-dim, rgba(107,164,255,0.13)); }
+}
+
+/* ── Mobile: restore cursor ─────────────────────────────────── */
+@media (hover: none) {
+  *, *::before, *::after  { cursor: auto !important; }
+  #cursor-dot, #cursor-ring { display: none !important; }
+}

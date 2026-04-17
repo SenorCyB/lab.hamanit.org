@@ -2,7 +2,7 @@ Overview
 
 This repository contains the source code for my personal portfolio website:
 
-https://hamanit.org
+lab.hamanit.org
 
 The website showcases my technical projects, skills, and experience as an IT & Cybersecurity student at Texas State Technical College (TSTC). It highlights hands-on work in infrastructure, networking, cybersecurity tools, and web development.
 This portfolio serves as both a technical showcase and a place where individuals or small businesses can learn about the technology services I offer.

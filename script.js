@@ -48,7 +48,16 @@
         this.mouse.y = -9999;
       });
 
-      window.addEventListener('scroll', () => this._onScroll(), { passive: true });
+      /* The canvas only ever sits behind the hero, so pause the loop once the
+         hero leaves the viewport instead of running rAF down the whole page.
+         (Replaces a scroll listener that spawned particles on scroll delta.) */
+      if (this.canvas.parentElement) {
+        new IntersectionObserver(entries => {
+          this.visible = entries[0].isIntersecting;
+          if (this.visible) this._tick();
+        }).observe(this.canvas.parentElement);
+      }
+      this.visible = true;
       this._tick();
     }
 
@@ -97,15 +106,6 @@
       }
     }
 
-    _onScroll () {
-      const delta = Math.abs(window.scrollY - this.lastScrollY);
-      this.lastScrollY = window.scrollY;
-      if (delta > 2) {
-        const burst = Math.min(Math.floor(delta / 6) + 1, 8);
-        for (let i = 0; i < burst; i++) this._spawn();
-      }
-    }
-
     _spawn () {
       if (!this.edges.length) return;
       const edge = this.edges[Math.floor(Math.random() * this.edges.length)];
@@ -132,6 +132,7 @@
     }
 
     _tick () {
+      if (this.visible === false) return;   /* hero off-screen, stop the loop */
       this.frame++;
       const ctx = this.ctx;
       const pal = this._pal();
@@ -284,7 +285,7 @@
          Characters scramble then resolve on hover.
   ══════════════════════════════════════════════════════════════ */
   function initGlitch () {
-    const CHARS = '!<>-_\\/[]{}—=+*^?#@~|';
+    const CHARS = '!<>-_\\/[]{}=+*^?#@~|';
     document.querySelectorAll('.section-label').forEach(el => {
       const orig = (el.firstChild?.nodeType === 3)
         ? el.firstChild.textContent.trim()

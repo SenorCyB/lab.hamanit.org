@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+  <script>document.documentElement.classList.add('js');</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Joshua Haman — IT Portfolio & Lab</title>
+  <title>Joshua Haman | IT &amp; AI Solutions Portfolio</title>
+  <meta name="description" content="Joshua Haman is a Professional Services Intern at AssetWorks studying BS Information Technology at WGU. I take messy processes, build a working prototype, and hand back something documented. Houston, Texas." />
+  <meta name="theme-color" content="#0a0a0c" />
+  <link rel="canonical" href="https://lab.hamanit.org/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Joshua Haman | IT &amp; AI Solutions Portfolio" />
+  <meta property="og:description" content="Consult, prototype, present. AI-augmented solutions work, IT infrastructure, and cybersecurity, built hands-on." />
+  <meta property="og:url" content="https://lab.hamanit.org/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="interactions.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@300..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260804g" />
+  <link rel="stylesheet" href="interactions.css?v=20260804g" />
 </head>
 <body>
 
@@ -26,8 +34,8 @@
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
     <div class="toggle-track">
       <div class="toggle-thumb">
-        <span class="icon-moon">🌙</span>
-        <span class="icon-sun">☀️</span>
+        <svg class="icon-moon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
       </div>
     </div>
   </button>
@@ -50,33 +58,32 @@
 
 <!-- ── HERO ─────────────────────────────────────────────────── -->
 <section class="hero" id="hero">
-  <!-- Circuit canvas lives here, behind the hero content only -->
-  <canvas id="cyber-canvas"></canvas>
-
-  <div class="hero-noise"></div>
+  <!-- Background depth. Slow drifting colour fields instead of the old
+       particle canvas: the constant motion of individual dots was the part
+       that read as busy. These move too slowly to track, so they add depth
+       without asking the eye to follow anything. -->
+  <div class="hero-aurora" aria-hidden="true">
+    <span class="aurora-field af1"></span>
+    <span class="aurora-field af2"></span>
+  </div>
   <div class="hero-grid-lines"></div>
+  <div class="hero-sweep" aria-hidden="true"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
 
   <div class="hero-badge">
     <span class="badge-dot"></span>
-    Houston, Texas — Open to Opportunities
+    Houston, Texas. Open to opportunities.
   </div>
 
   <div class="hero-content">
     <h1 class="hero-name">
       <span class="hero-name-line" style="--d:0s">Joshua</span>
-      <span class="hero-name-line italic" style="--d:0.08s">Haman</span>
+      <span class="hero-name-line accent" style="--d:0.08s">Haman</span>
     </h1>
-    <div class="hero-tagline">
-      <span class="hero-tag-item" style="--d:0.20s">IT Infrastructure</span>
-      <span class="hero-tag-sep"  style="--d:0.26s">·</span>
-      <span class="hero-tag-item" style="--d:0.30s">Networking</span>
-      <span class="hero-tag-sep"  style="--d:0.36s">·</span>
-      <span class="hero-tag-item" style="--d:0.40s">Always Learning</span>
-    </div>
     <p class="hero-bio" style="--d:0.50s">
-      IT student at Texas State Technical College — driven by curiosity across
-      every layer of technology. From hardware to networks to security, I'm
-      building real skills through hands-on projects and never stopping at the surface.
+      I take someone else's messy process, work out what it needs to do,
+      build a prototype, and document it.
     </p>
     <div class="hero-actions" style="--d:0.62s">
       <a href="#projects" class="btn-primary">View Projects</a>
@@ -84,26 +91,24 @@
       <a href="/Joshua_Haman_Resume.pdf" class="btn-ghost" target="_blank">Résumé ↗</a>
     </div>
   </div>
+</section>
 
-  <div class="hero-scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-
-  <div class="hero-stat-bar">
+<!-- ── STATS ────────────────────────────────────────────────── -->
+<section class="stat-band">
+  <div class="container hero-stat-bar">
     <div class="hero-stat">
-      <span class="stat-num">3+</span>
-      <span class="stat-label">Years Hands-On</span>
+      <span class="stat-num">4</span>
+      <span class="stat-label">Prototypes Shipped</span>
     </div>
     <div class="hero-stat-div"></div>
     <div class="hero-stat">
-      <span class="stat-num">8</span>
-      <span class="stat-label">Technical Skills</span>
+      <span class="stat-num">6</span>
+      <span class="stat-label">Roles &amp; Internships</span>
     </div>
     <div class="hero-stat-div"></div>
     <div class="hero-stat">
       <span class="stat-num">3</span>
-      <span class="stat-label">Roles &amp; Internships</span>
+      <span class="stat-label">Certifications Earned</span>
     </div>
   </div>
 </section>
@@ -111,32 +116,29 @@
 <!-- ── ABOUT ─────────────────────────────────────────────────── -->
 <section class="about section-pad" id="about">
   <div class="container">
-    <div class="section-label">About</div>
     <div class="about-grid">
       <div class="about-headline">
-        <h2>Hungry across every layer of IT — infrastructure, networking, security, and everything in between.</h2>
+        <h2>Consult, prototype, present. That pattern is most of what I do, and it happens to work on almost anything technical.</h2>
       </div>
       <div class="about-body">
-        <p>I'm Joshua Haman, an IT student at <strong>Texas State Technical College</strong> based in Houston, Texas. I don't just study technology — I build with it, break it, and figure out how it works from the ground up.</p>
-        <p>From configuring networks and spinning up virtual labs to training AI models and building web tools, I'm constantly expanding what I can do. Every project here represents something I actually built, learned from, and pushed further.</p>
+        <p>I'm Joshua Haman, based in Houston, Texas. I'm a Professional Services Intern at <strong>AssetWorks</strong>, a fleet and asset management software company, where I've spent this summer picking up half-finished internal problems and turning them into things people can actually use: a reporting tool, a consolidated data workbook, a quoting app someone else had to abandon.</p>
+        <p>I finished my AAS in Cyber Security Technology at <strong>Texas State Technical College</strong> and I'm continuing with a BS in Information Technology at <strong>WGU</strong>. The infrastructure and security background isn't separate from the consulting work. It's why I can sit in a requirements meeting and know what's actually buildable.</p>
         <div class="about-details">
           <div class="about-detail-item">
             <span class="detail-label">Education</span>
-            <span class="detail-value">IT &amp; Cybersecurity — Texas State Technical College</span>
+            <span class="detail-value">BS Information Technology, WGU (in progress) · AAS Cyber Security Technology, TSTC</span>
           </div>
           <div class="about-detail-item">
             <span class="detail-label">Experience</span>
-            <span class="detail-value">Technical Support · Consulting · Hardware · Network Diagnostics</span>
+            <span class="detail-value">Professional Services · AI Training · Technical Support · Hardware &amp; Networks</span>
           </div>
           <div class="about-detail-item">
             <span class="detail-label">Focus Areas</span>
-            <span class="detail-value">Cyber Security &amp; Networking · Technical Problem Solving</span>
+            <span class="detail-value">Solutions &amp; Implementation · AI Automation · Infrastructure &amp; Security</span>
           </div>
           <div class="about-detail-item">
             <span class="detail-label">Status</span>
-            <span class="detail-value status-open">
-              <span class="status-dot"></span>Seeking new opportunities
-            </span>
+            <span class="detail-value status-open">Seeking new opportunities</span>
           </div>
         </div>
       </div>
@@ -147,104 +149,103 @@
 <!-- ── SKILLS ─────────────────────────────────────────────────── -->
 <section class="skills section-pad" id="skills">
   <div class="container">
-    <div class="section-label">Skills</div>
     <h2 class="section-title">Technical Proficiencies</h2>
-    <p class="section-sub">Eight core areas of expertise built through education and hands-on work.</p>
+    <p class="section-sub">Eight areas I work in, ordered by what I reach for most.</p>
     <div class="skills-grid">
 
       <div class="skill-card" data-index="0">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Solutions &amp; Consulting</h3>
+        <ul>
+          <li>Requirements gathering</li>
+          <li>Prototype-to-handoff delivery</li>
+          <li>Stakeholder presentations</li>
+          <li>Process documentation</li>
+          <li>Cross-functional coordination</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="1">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+        <h3>AI &amp; Automation</h3>
+        <ul>
+          <li>Claude API integration</li>
+          <li>Prompt engineering &amp; tool use</li>
+          <li>Microsoft Copilot workflows</li>
+          <li>Report &amp; data automation</li>
+          <li>AI-assisted development</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="2">
         <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg></div>
         <h3>IT Support</h3>
         <ul>
           <li>Hardware diagnostics &amp; repair</li>
           <li>OS troubleshooting</li>
           <li>Software configuration</li>
-          <li>Performance optimization</li>
           <li>Device setup &amp; migration</li>
-        </ul>
-      </div>
-
-      <div class="skill-card" data-index="1">
-        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3>Cybersecurity</h3>
-        <ul>
-          <li>Network security principles</li>
-          <li>Firewall configuration</li>
-          <li>Vulnerability assessment</li>
-          <li>Security auditing</li>
-          <li>Incident response</li>
-        </ul>
-      </div>
-
-      <div class="skill-card" data-index="2">
-        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        <h3>Networking</h3>
-        <ul>
-          <li>Network topology design</li>
-          <li>VLANs &amp; subnetting</li>
-          <li>Router &amp; switch config</li>
-          <li>Packet analysis (Wireshark)</li>
-          <li>Secure architecture</li>
+          <li>Customer-facing consultation</li>
         </ul>
       </div>
 
       <div class="skill-card" data-index="3">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <h3>Networking</h3>
+        <ul>
+          <li>Cisco routing &amp; switching</li>
+          <li>VLANs, ACLs, OSPF</li>
+          <li>ASA firewall configuration</li>
+          <li>IPSec site-to-site VPN</li>
+          <li>Packet analysis (Wireshark)</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="4">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Cybersecurity</h3>
+        <ul>
+          <li>Network security principles</li>
+          <li>Nmap, Snort IDS, Metasploit</li>
+          <li>Vulnerability assessment</li>
+          <li>Incident response simulation</li>
+          <li>Kali Linux tooling</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="5">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M8 9l-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg></div>
+        <h3>Scripting &amp; Data</h3>
+        <ul>
+          <li>Python (Pandas, NumPy)</li>
+          <li>Node.js</li>
+          <li>PowerShell &amp; Active Directory</li>
+          <li>Bash scripting</li>
+          <li>Excel data consolidation</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="6">
+        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+        <h3>Documentation</h3>
+        <ul>
+          <li>Technical process documentation</li>
+          <li>Handoff-ready runbooks</li>
+          <li>Network &amp; rack diagrams</li>
+          <li>Lab &amp; audit docs</li>
+          <li>Infrastructure planning</li>
+        </ul>
+      </div>
+
+      <div class="skill-card" data-index="7">
         <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M8 21h8M12 17v4"/></svg></div>
         <h3>PC Building</h3>
         <ul>
           <li>Custom PC assembly</li>
           <li>Hardware compatibility</li>
-          <li>Cooling &amp; optimization</li>
+          <li>Cooling &amp; thermals</li>
           <li>BIOS &amp; firmware updates</li>
-          <li>GPU/CPU tuning</li>
-        </ul>
-      </div>
-
-      <div class="skill-card" data-index="4">
-        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
-        <h3>Documentation</h3>
-        <ul>
-          <li>Network &amp; rack diagrams</li>
-          <li>Technical reporting</li>
-          <li>Lab &amp; audit docs</li>
-          <li>Infrastructure planning</li>
-          <li>Visual diagramming</li>
-        </ul>
-      </div>
-
-      <div class="skill-card" data-index="5">
-        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h3>Communication</h3>
-        <ul>
-          <li>Simplifying tech concepts</li>
-          <li>Client consultation</li>
-          <li>Conflict resolution</li>
-          <li>Active listening</li>
-          <li>Solution planning</li>
-        </ul>
-      </div>
-
-      <div class="skill-card" data-index="6">
-        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-        <h3>Automation</h3>
-        <ul>
-          <li>AI workflow integration</li>
-          <li>Website automation</li>
-          <li>Process optimization</li>
-          <li>System integration</li>
-          <li>Efficiency-focused design</li>
-        </ul>
-      </div>
-
-      <div class="skill-card" data-index="7">
-        <div class="skill-card-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3>Consulting</h3>
-        <ul>
-          <li>Tech market opportunities</li>
-          <li>Small biz IT consulting</li>
-          <li>Service structuring</li>
-          <li>Business automation</li>
-          <li>Scalable tech strategy</li>
+          <li>Diagnostics &amp; tuning</li>
         </ul>
       </div>
 
@@ -257,11 +258,53 @@
   <div class="container">
     <div class="section-label">Projects</div>
     <h2 class="section-title">Technical Projects</h2>
-    <p class="section-sub">Hands-on cybersecurity and IT projects demonstrating practical skills in secure infrastructure, networking, and development.</p>
+    <p class="section-sub">Things I built, in and out of work. Each one started as a problem someone actually had.</p>
     <div class="projects-list">
 
-      <a href="projects/homelab.html" class="project-row">
+      <a href="projects/openclaw.html" class="project-row">
         <div class="project-num">01</div>
+        <div class="project-info">
+          <h3>OpenClaw: Self-Hosted AI Gateway</h3>
+          <p>A Node.js gateway I run as the backbone for my own automation. Routes requests to a hosted LLM provider and exposes the same assistant through Discord and Telegram bots. Went through several providers before settling on one that held up under real use.</p>
+          <div class="project-tags">
+            <span>Node.js</span><span>LLM APIs</span><span>Discord Bot</span><span>Telegram Bot</span>
+            <span>Self-Hosted</span>
+          </div>
+        </div>
+        <div class="project-key-learning">
+          <span class="kl-label">Key Learning</span>
+          <span class="kl-text">Rate limits and provider reliability drive architecture more than model choice does. Swappable providers were worth building in early.</span>
+        </div>
+        <div class="project-arrow">→</div>
+      </a>
+
+      <a href="projects/portfolio-website.html" class="project-row">
+        <div class="project-num">02</div>
+        <div class="project-info">
+          <h3>Website Development</h3>
+          <p>Every site I have designed, built, and deployed, for my own brand and for local businesses. Hand-written HTML, CSS, and vanilla JavaScript, no page builders, across GitHub Pages, Netlify, and Bluehost.</p>
+          <ul class="project-sites">
+            <li><span class="site-name">lab.hamanit.org</span><span class="site-role">Personal portfolio and lab</span><span class="site-state is-live">Live</span></li>
+            <li><span class="site-name">hamanit.org</span><span class="site-role">HAMIT business site</span><span class="site-state is-live">Live</span></li>
+            <li><span class="site-name">1cachouston.com</span><span class="site-role">1st Choice Auto Credit</span><span class="site-state is-live">Live</span></li>
+            <li><span class="site-name">brooksiderealtytx.com</span><span class="site-role">Brookside Realty</span><span class="site-state is-live">Live</span></li>
+            <li><span class="site-name">cinelorente.com</span><span class="site-role">Photography brand</span><span class="site-state">In progress</span></li>
+            <li><span class="site-name">katytxcoatings.com</span><span class="site-role">Ceramic coating shop</span><span class="site-state">In progress</span></li>
+          </ul>
+          <div class="project-tags">
+            <span>HTML/CSS/JS</span><span>GitHub Pages</span><span>Netlify</span><span>Bluehost</span>
+            <span>Responsive Design</span><span>Client Delivery</span>
+          </div>
+        </div>
+        <div class="project-key-learning">
+          <span class="kl-label">Key Learning</span>
+          <span class="kl-text">Client work is content discipline. Every claim on the page has to come from the client, not from what would look good there.</span>
+        </div>
+        <div class="project-arrow">→</div>
+      </a>
+
+      <a href="projects/homelab.html" class="project-row">
+        <div class="project-num">03</div>
         <div class="project-info">
           <h3>Virtualized IT &amp; Security Home Lab</h3>
           <p>Built a virtualized lab environment to simulate enterprise networks and practice cybersecurity and infrastructure management.</p>
@@ -278,7 +321,7 @@
       </a>
 
       <a href="projects/network-scanner.html" class="project-row">
-        <div class="project-num">02</div>
+        <div class="project-num">04</div>
         <div class="project-info">
           <h3>Custom PC Builds &amp; Hardware Optimization</h3>
           <p>Designed and assembled custom desktop systems focused on performance, reliability, and efficient hardware configuration.</p>
@@ -294,22 +337,6 @@
         <div class="project-arrow">→</div>
       </a>
 
-      <a href="projects/portfolio-website.html" class="project-row">
-        <div class="project-num">03</div>
-        <div class="project-info">
-          <h3>HAMAN IT Portfolio Website</h3>
-          <p>Designed and deployed a personal technical portfolio to showcase projects, skills, and technical work.</p>
-          <div class="project-tags">
-            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>GitHub Pages</span>
-          </div>
-        </div>
-        <div class="project-key-learning">
-          <span class="kl-label">Key Learning</span>
-          <span class="kl-text">Responsive frontend design, Git version control, and static site deployment.</span>
-        </div>
-        <div class="project-arrow">→</div>
-      </a>
-
     </div>
   </div>
 </section>
@@ -319,9 +346,37 @@
 <!-- ── EXPERIENCE ─────────────────────────────────────────────── -->
 <section class="experience section-pad" id="certifications">
   <div class="container">
-    <div class="section-label">Credentials</div>
-    <h2 class="section-title">Licenses &amp; Certifications</h2>
+    <h2 class="section-title">Education &amp; Certifications</h2>
     <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">2026 - Present</span>
+          <span class="timeline-badge current">In Progress</span>
+        </div>
+        <div class="timeline-content">
+          <h3>BS, Information Technology <span class="timeline-sep">·</span> <span class="timeline-company">Western Governors University</span></h3>
+          <span class="timeline-location">Competency-based · Self-paced alongside full-time work</span>
+          <ul class="timeline-bullets">
+            <li>Broad IT coverage: networking, systems administration, cloud, project management, and security fundamentals</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">2024 - 2026</span>
+          <span class="timeline-badge">Completed</span>
+        </div>
+        <div class="timeline-content">
+          <h3>AAS, Cyber Security Technology <span class="timeline-sep">·</span> <span class="timeline-company">Texas State Technical College</span></h3>
+          <span class="timeline-location">Graduated May 2026 · GPA 3.9</span>
+          <ul class="timeline-bullets">
+            <li>Network security, firewalls, Cisco routing and switching, ASA, ACLs, VLANs, and OSPF</li>
+            <li>AWS fundamentals, Bash scripting, and hands-on lab work in Kali Linux and Packet Tracer</li>
+          </ul>
+        </div>
+      </div>
 
       <div class="timeline-item">
         <div class="timeline-meta">
@@ -329,7 +384,7 @@
           <span class="timeline-badge">NVIDIA</span>
         </div>
         <div class="timeline-content">
-          <h3>AI Infrastructure and Operations Fundamentals <span class="timeline-sep">—</span> <span class="timeline-company">NVIDIA</span></h3>
+          <h3>AI Infrastructure and Operations Fundamentals <span class="timeline-sep">·</span> <span class="timeline-company">NVIDIA</span></h3>
           <span class="timeline-location">Credential ID: JQZDNM1UUX6C</span>
           <ul class="timeline-bullets">
             <li>Covers AI infrastructure fundamentals including GPU computing, CUDA, and GPGPU workloads</li>
@@ -344,7 +399,7 @@
           <span class="timeline-badge">Anthropic</span>
         </div>
         <div class="timeline-content">
-          <h3>Building with the Claude API <span class="timeline-sep">—</span> <span class="timeline-company">Anthropic</span></h3>
+          <h3>Building with the Claude API <span class="timeline-sep">·</span> <span class="timeline-company">Anthropic</span></h3>
           <span class="timeline-location">Credential ID: r3xiacmdarbj</span>
           <ul class="timeline-bullets">
             <li>Practical certification in building applications and integrations using the Claude API</li>
@@ -359,11 +414,25 @@
           <span class="timeline-badge">Autodesk</span>
         </div>
         <div class="timeline-content">
-          <h3>Autodesk Certified User <span class="timeline-sep">—</span> <span class="timeline-company">Autodesk</span></h3>
+          <h3>Autodesk Certified User <span class="timeline-sep">·</span> <span class="timeline-company">Autodesk</span></h3>
           <span class="timeline-location">Fusion 360 &amp; Moldflow</span>
           <ul class="timeline-bullets">
             <li>Certified proficiency in Autodesk Fusion 360 and Moldflow for design and simulation workflows</li>
-            <li>Skills: Architectural Design, Revit, 3D Modeling</li>
+            <li>Skills: Parametric 3D modeling, CAD/CAM, plastic injection mold simulation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Q3 2026</span>
+          <span class="timeline-badge">In Progress</span>
+        </div>
+        <div class="timeline-content">
+          <h3>CompTIA A+ <span class="timeline-sep">·</span> <span class="timeline-company">CompTIA</span></h3>
+          <span class="timeline-location">Next cert target</span>
+          <ul class="timeline-bullets">
+            <li>Industry-standard IT support credential. Foundation before Network+ and Security+</li>
           </ul>
         </div>
       </div>
@@ -380,11 +449,29 @@
 
       <div class="timeline-item">
         <div class="timeline-meta">
-          <span class="timeline-date">Dec 2025 — Present</span>
+          <span class="timeline-date">Jun 2026 - Present</span>
           <span class="timeline-badge current">Current</span>
         </div>
         <div class="timeline-content">
-          <h3>AI Model Trainer <span class="timeline-sep">—</span> <span class="timeline-company">Outlier AI</span></h3>
+          <h3>Professional Services Intern <span class="timeline-sep">·</span> <span class="timeline-company">AssetWorks</span></h3>
+          <span class="timeline-location">Greater Houston · Full-time Internship</span>
+          <ul class="timeline-bullets">
+            <li>Built a Microsoft Copilot proof-of-concept that generates internal status updates, executive summaries, and customer-facing weekly reports from project data spread across ticketing, PSA, CRM, and email systems</li>
+            <li>Consolidated 20 separate fleet-data spreadsheets into a single customer-facing workbook with an integrated VIN decoder, iterating through review cycles with the manager</li>
+            <li>Documented the ticket-to-report process end to end so the workflow could be handed off to another team</li>
+            <li>Picked up a stalled internal quote-builder application mid-development, finished it, and presented it. Auto-assigns terms and conditions based on the options selected</li>
+            <li>Delivered each project the same way: consult to understand the problem, build a prototype, present it, working across product, professional services, and PM teams</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Dec 2025 - Present</span>
+          <span class="timeline-badge current">Current</span>
+        </div>
+        <div class="timeline-content">
+          <h3>AI Model Trainer <span class="timeline-sep">·</span> <span class="timeline-company">Outlier AI</span></h3>
           <span class="timeline-location">Remote · Contract</span>
           <ul class="timeline-bullets">
             <li>Evaluate, rate, and provide structured feedback on AI-generated content to improve model accuracy and output quality</li>
@@ -396,12 +483,28 @@
 
       <div class="timeline-item">
         <div class="timeline-meta">
-          <span class="timeline-date">Oct 2024 — Present</span>
+          <span class="timeline-date">Nov 2025 - Present</span>
           <span class="timeline-badge current">Current</span>
         </div>
         <div class="timeline-content">
-          <h3>Consultation Agent <span class="timeline-sep">—</span> <span class="timeline-company">Geek Squad · Best Buy</span></h3>
-          <span class="timeline-location">Greater Houston · On-site · Part-time</span>
+          <h3>AI Trainer Data Analyst <span class="timeline-sep">·</span> <span class="timeline-company">Handshake</span></h3>
+          <span class="timeline-location">Remote contract, United States</span>
+          <ul class="timeline-bullets">
+            <li>Review and validate AI training data to ensure accuracy, consistency, and adherence to quality standards</li>
+            <li>Identify errors and edge cases while following structured review workflows and meeting performance benchmarks</li>
+            <li>Document findings clearly to support reliable training outcomes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Oct 2024 - Present</span>
+          <span class="timeline-badge current">Current</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Consultation &amp; Advanced Repair Agent <span class="timeline-sep">·</span> <span class="timeline-company">Geek Squad, Best Buy</span></h3>
+          <span class="timeline-location">Greater Houston, part-time on-site</span>
           <ul class="timeline-bullets">
             <li>Provide customer-facing diagnostics, technical support, and clear repair recommendations</li>
             <li>Troubleshoot hardware and software issues across laptops, desktops, and peripherals</li>
@@ -413,45 +516,12 @@
 
       <div class="timeline-item">
         <div class="timeline-meta">
-          <span class="timeline-date">May 2024 — Present</span>
-          <span class="timeline-badge current">Current</span>
-        </div>
-        <div class="timeline-content">
-          <h3>Founder &amp; Technology Solutions Provider <span class="timeline-sep">—</span> <span class="timeline-company">Haman IT Solutions</span></h3>
-          <span class="timeline-location">Greater Houston · Remote · Freelance</span>
-          <ul class="timeline-bullets">
-            <li>Founded and operate a technology services company serving individuals and small businesses in the Katy, TX area</li>
-            <li>Build custom PCs tailored to client needs, develop and deploy websites from the ground up</li>
-            <li>Provide hands-on IT support including troubleshooting, diagnostics, virus removal, and hardware repair</li>
-            <li>Deliver reliable, personalized tech solutions focused on affordability and client satisfaction</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-meta">
-          <span class="timeline-date">Nov 2025 — Apr 2026</span>
-          <span class="timeline-badge">6 mos</span>
-        </div>
-        <div class="timeline-content">
-          <h3>AI Trainer Data Analyst <span class="timeline-sep">—</span> <span class="timeline-company">Handshake</span></h3>
-          <span class="timeline-location">United States · Remote · Contract</span>
-          <ul class="timeline-bullets">
-            <li>Reviewed and validated AI training data to ensure accuracy, consistency, and adherence to quality standards</li>
-            <li>Identified errors and edge cases while following structured review workflows and meeting performance benchmarks</li>
-            <li>Documented findings clearly to support reliable training outcomes</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-meta">
-          <span class="timeline-date">Apr 2024 — Oct 2024</span>
+          <span class="timeline-date">Apr 2024 - Oct 2024</span>
           <span class="timeline-badge">7 mos</span>
         </div>
         <div class="timeline-content">
-          <h3>Sales Associate <span class="timeline-sep">—</span> <span class="timeline-company">Best Buy</span></h3>
-          <span class="timeline-location">Greater Houston · On-site · Part-time</span>
+          <h3>Sales Associate <span class="timeline-sep">·</span> <span class="timeline-company">Best Buy</span></h3>
+          <span class="timeline-location">Greater Houston, part-time on-site</span>
           <ul class="timeline-bullets">
             <li>Assisted customers with personalized tech recommendations, drove product sales, and supported a smooth in-store experience</li>
             <li>Maintained strong product knowledge across computing, mobile, and home tech categories</li>
@@ -462,11 +532,11 @@
 
       <div class="timeline-item">
         <div class="timeline-meta">
-          <span class="timeline-date">Feb 2024 — Jul 2024</span>
+          <span class="timeline-date">Feb 2024 - Jul 2024</span>
           <span class="timeline-badge">Internship</span>
         </div>
         <div class="timeline-content">
-          <h3>Help Desk Technician <span class="timeline-sep">—</span> <span class="timeline-company">Brookside Realty, LLC</span></h3>
+          <h3>Help Desk Technician <span class="timeline-sep">·</span> <span class="timeline-company">Brookside Realty, LLC</span></h3>
           <span class="timeline-location">Greater Houston · Hybrid</span>
           <ul class="timeline-bullets">
             <li>Delivered technical support by troubleshooting network connectivity and resolving software-related problems</li>
@@ -483,7 +553,6 @@
 <!-- ── CONTACT ────────────────────────────────────────────────── -->
 <section class="contact section-pad" id="contact">
   <div class="container">
-    <div class="section-label">Contact</div>
     <div class="contact-grid">
 
       <div class="contact-left">
@@ -524,7 +593,7 @@
           <button type="submit" class="btn-primary form-submit">Send Message →</button>
           <div class="form-success" id="formSuccess">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"/></svg>
-            Message ready — if your email client didn't open, email joshham364@gmail.com directly.
+            Message ready. If your email client didn't open, email joshham364@gmail.com directly.
           </div>
         </form>
       </div>
@@ -548,22 +617,20 @@
   </div>
 </footer>
 
-<!-- ── Scroll progress wheel ──────────────────────────────────── -->
+<!-- ── Scroll progress wheel ──────────────────────────────────────
+     Driven entirely by CSS scroll-driven animation (no scroll listener).
+     Hidden where animation-timeline is unsupported, so it never renders
+     stuck at a wrong value. -->
 <div id="scroll-wheel" aria-hidden="true">
   <svg viewBox="0 0 36 36">
     <circle class="scroll-wheel-track" cx="18" cy="18" r="15.9"/>
     <circle class="scroll-wheel-fill"  cx="18" cy="18" r="15.9"/>
   </svg>
-  <span id="scroll-pct">0</span>
 </div>
-
-<!-- ── Cursor elements ────────────────────────────────────────── -->
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
 
 <!-- ── Scripts ───────────────────────────────────────────────── -->
 <script>
-  /* Theme toggle — runs immediately to prevent flash */
+  /* Theme toggle runs immediately to prevent flash */
   (function () {
     var root  = document.documentElement;
     var saved = localStorage.getItem('hamanit-theme') || 'dark';
@@ -580,10 +647,18 @@
     });
   }());
 
-  /* Nav scroll shrink */
-  window.addEventListener('scroll', function () {
+  /* Nav scroll shrink, via an IntersectionObserver sentinel rather than a
+     scroll listener (scroll handlers fire every frame and cause jank). */
+  document.addEventListener('DOMContentLoaded', function () {
     var nav = document.getElementById('nav');
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+    if (!nav) return;
+    var sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:40px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(function (entries) {
+      nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }).observe(sentinel);
   });
 
   /* Hamburger / mobile menu */
@@ -612,6 +687,16 @@
     }, { threshold: 0.1 });
     revealEls.forEach(function (el) { io.observe(el); });
 
+    /* Reveal failsafe -hidden webviews and preview panes suspend IntersectionObserver
+       callbacks, which would leave every revealed section stuck at opacity 0 forever.
+       If nothing has revealed after 2.5s the observer is demonstrably dead, so force
+       the final state. Healthy browsers reveal in milliseconds and never hit this. */
+    setTimeout(function () {
+      if (!document.querySelector('.skill-card.visible, .project-row.visible, .timeline-item.visible')) {
+        document.documentElement.classList.add('reveal-fallback');
+      }
+    }, 2500);
+
     /* Service cards → scroll to contact */
     var contact = document.getElementById('contact');
     document.querySelectorAll('.service-card').forEach(function (card) {
@@ -639,60 +724,50 @@
   });
 </script>
 
-<script src="interactions.js" defer></script>
+<script src="interactions.js?v=20260804g" defer></script>
 
 <style>
-  /* ── Scroll progress wheel ── */
-  #scroll-wheel {
-    position: fixed;
-    bottom: 32px; right: 32px;
-    width: 48px; height: 48px;
-    z-index: 200;
-    opacity: 0;
-    transform: scale(0.7);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-  }
-  #scroll-wheel.visible { opacity: 1; transform: scale(1); }
-  #scroll-wheel svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-  .scroll-wheel-track {
-    fill: none;
-    stroke: var(--border2);
-    stroke-width: 2.5;
-  }
-  .scroll-wheel-fill {
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    transition: stroke-dashoffset 0.1s linear;
-    filter: drop-shadow(0 0 4px var(--accent));
-  }
-  #scroll-pct {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--ff-mono);
-    font-size: 9px; font-weight: 600;
-    color: var(--accent); letter-spacing: -0.02em;
-  }
-  @media (max-width: 600px) {
-    #scroll-wheel { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+  /* ── Scroll progress wheel ──────────────────────────────────────
+     Hidden by default. Only shown where CSS scroll-driven animation
+     is supported, so unsupported browsers never see a ring frozen at
+     0% instead of a broken time-based animation running once on load. */
+  #scroll-wheel { display: none; }
+
+  @supports (animation-timeline: scroll()) {
+    #scroll-wheel {
+      display: block;
+      position: fixed;
+      bottom: 32px; right: 32px;
+      width: 48px; height: 48px;
+      z-index: 200;
+      pointer-events: none;
+      opacity: 0;
+      animation: wheel-fade linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 80px 200px;
+    }
+    #scroll-wheel svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .scroll-wheel-track { fill: none; stroke: var(--border2); stroke-width: 2.5; }
+    .scroll-wheel-fill {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: wheel-fill linear both;
+      animation-timeline: scroll(root block);
+    }
+    @keyframes wheel-fade { to { opacity: 1; } }
+    @keyframes wheel-fill { to { stroke-dashoffset: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      #scroll-wheel { display: none; }
+    }
+    @media (max-width: 600px) {
+      #scroll-wheel { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+    }
   }
 </style>
-<script>
-  (function () {
-    var wheel    = document.getElementById('scroll-wheel');
-    var fill     = document.querySelector('.scroll-wheel-fill');
-    var label    = document.getElementById('scroll-pct');
-    window.addEventListener('scroll', function () {
-      var pct = Math.round(window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100) || 0;
-      fill.style.strokeDashoffset = 100 - pct;
-      label.textContent = pct;
-      wheel.classList.toggle('visible', window.scrollY > 80);
-    }, { passive: true });
-  }());
-</script>
 </body>
 </html>

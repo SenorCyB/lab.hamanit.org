@@ -3,7 +3,7 @@
    Deep Navy + Electric Blue + Emerald — Professional IT Theme
    ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@300..600&display=swap');
 
 /* ---- Reset & Base ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,9 +30,8 @@
   --accent-glow: rgba(107,164,255,0.07);
   --radius:      12px;
   --radius-lg:   20px;
-  --ff-display:  'Syne', sans-serif;
-  --ff-serif:    'Instrument Serif', serif;
-  --ff-mono:     'DM Mono', monospace;
+  --ff-display:  'Geist', system-ui, -apple-system, sans-serif;
+  --ff-mono:     'Geist Mono', ui-monospace, monospace;
   --transition:  0.3s cubic-bezier(0.4,0,0.2,1);
   --theme-transition: 0.45s cubic-bezier(0.4,0,0.2,1);
 }
@@ -82,8 +81,10 @@ body,
 
 /* ── Light-mode scrolled nav ─────────────────────────────────── */
 [data-theme="light"] .nav.scrolled {
-  background: rgba(245,247,252,0.92);
-  border-bottom-color: var(--border2);
+  background: rgba(255,255,255,0.78);
+  border-color: var(--border2);
+  box-shadow: 0 12px 32px rgba(16,26,52,0.10),
+              inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
 /* ── Light-mode hero adjustments ─────────────────────────────── */
@@ -216,7 +217,7 @@ body,
 
 /* Decorative lines (light) */
 .toggle-track::after {
-  content: '— —';
+  content: '';
   position: absolute;
   left: 6px;
   top: 50%;
@@ -283,7 +284,19 @@ body,
 /* ================================================================
    BASE
    ================================================================ */
-html { scroll-behavior: smooth; font-size: 16px; }
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  /* The header is fixed, so an anchor jump would otherwise land the section
+     heading underneath it. Nav bottom edge sits at ~82px. */
+  scroll-padding-top: 104px;
+}
+@media (max-width: 900px) {
+  html { scroll-padding-top: 90px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
 
 body {
   font-family: var(--ff-display);
@@ -388,54 +401,104 @@ ul { list-style: none; }
 /* ================================================================
    NAV
    ================================================================ */
+/* A floating island leaves a gap above and beside it, so page content scrolls
+   through that strip and collides with the header. This scrim fades the top of
+   the viewport once scrolled, so the island sits over a soft edge instead of
+   over live content. Sits under the nav (100) and the mobile menu (99). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 108px;
+  z-index: 98;
+  pointer-events: none;
+  opacity: 0;
+  background: var(--bg);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  transition: opacity var(--transition);
+}
+body:has(.nav.scrolled)::before { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { transition: none; }
+}
+
+/* Floating island header. A full-bleed bar pinned to the top edge makes the
+   page feel lidded; a contained pill lets the hero breathe underneath and
+   gives the scrolled state something to actually resolve into. */
 .nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1180px, calc(100% - 48px));
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 48px;
-  transition: var(--transition);
+  gap: 20px;
+  padding: 10px 10px 10px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: top var(--transition), padding var(--transition),
+              background var(--transition), border-color var(--transition),
+              box-shadow var(--transition);
 }
 .nav.scrolled {
-  background: rgba(8,14,28,0.90);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border2);
-  padding: 14px 48px;
+  top: 12px;
+  background: rgba(8,14,28,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-color: var(--border2);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.32),
+              inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
 .nav-logo {
   font-family: var(--ff-display);
-  font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  font-size: 1.05rem;
+  /* Geist is a tighter face than Syne; positive tracking made the wordmark
+     read as spaced-out rather than deliberate. */
+  letter-spacing: -0.02em;
   color: var(--text);
+  white-space: nowrap;
 }
 .nav-logo span { color: var(--accent); }
 
 .nav-links {
   display: flex;
-  gap: 32px;
+  align-items: center;
+  gap: 2px;
 }
+/* Bigger, with tracking removed. Wide letter-spacing on small nav text costs
+   more legibility than it buys style, and the links now carry a real hover
+   target instead of only a colour change. */
 .nav-links a {
-  font-size: 0.82rem;
+  display: block;
+  font-size: 0.9rem;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: -0.005em;
   color: var(--muted);
-  transition: color var(--transition);
+  padding: 9px 14px;
+  border-radius: 999px;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
-.nav-links a:hover { color: var(--text); }
+.nav-links a:hover {
+  color: var(--text);
+  background: var(--surface);
+}
 
 .nav-cta {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   background: var(--accent);
   color: #080e1c;
-  padding: 10px 22px;
-  border-radius: 100px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  white-space: nowrap;
   transition: var(--transition);
 }
 .nav-cta:hover {
@@ -447,11 +510,19 @@ ul { list-style: none; }
 .nav-hamburger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  /* Was padding 4px, giving a 32x16 hit area. This is the only nav control
+     on mobile, so it needs the full 44px target. */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin-right: -6px;
+  border-radius: 999px;
 }
 .nav-hamburger span {
   display: block;
@@ -597,11 +668,14 @@ ul { list-style: none; }
 
 .hero-name {
   font-family: var(--ff-display);
-  font-weight: 800;
-  font-size: clamp(4.5rem, 12vw, 10rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  margin-bottom: 32px;
+  font-weight: 700;
+  /* Was clamp(4.5rem, 12vw, 10rem). Geist has a larger x-height and heavier
+     colour than Syne, so the old ceiling read as shouting rather than
+     confident. Hierarchy comes from weight and colour, not raw scale. */
+  font-size: clamp(3.25rem, 8.5vw, 7rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  margin-bottom: 28px;
   overflow: hidden;
 }
 .hero-name-line {
@@ -609,10 +683,10 @@ ul { list-style: none; }
   animation: fadeUp 0.7s ease both;
   animation-delay: var(--d, 0s);
 }
-.hero-name-line.italic {
-  font-family: var(--ff-serif);
-  font-style: italic;
-  font-weight: 300;
+/* Second line of the name is differentiated by weight and color, in the same
+   family. A serif word dropped into a sans headline is a mixed-family tell. */
+.hero-name-line.accent {
+  font-weight: 400;
   color: var(--accent);
 }
 
@@ -860,7 +934,7 @@ ul { list-style: none; }
   position: relative;
 }
 .skill-card ul li::before {
-  content: '—';
+  content: '·';
   position: absolute;
   left: 0;
   color: var(--accent);
@@ -1210,10 +1284,11 @@ ul { list-style: none; }
   line-height: 1;
   margin-bottom: 24px;
 }
+/* Emphasis inside a headline stays in the same family. Mixing a serif word
+   into a sans headline is an AI tell, so weight and color carry it instead. */
 .contact-left h2 em {
-  font-family: var(--ff-serif);
-  font-style: italic;
-  font-weight: 300;
+  font-style: normal;
+  font-weight: 400;
   color: var(--accent);
 }
 .contact-left p { font-size: 1rem; color: var(--muted); line-height: 1.75; margin-bottom: 36px; }
@@ -1337,8 +1412,12 @@ ul { list-style: none; }
   .timeline-item { grid-template-columns: 1fr; gap: 12px; }
   .services-cta-bar { flex-direction: column; align-items: flex-start; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
-  .nav { padding: 20px 24px; }
-  .nav.scrolled { padding: 14px 24px; }
+  .nav {
+    top: 12px;
+    width: calc(100% - 24px);
+    padding: 8px 8px 8px 18px;
+  }
+  .nav.scrolled { top: 8px; }
 }
 
 @media (max-width: 600px) {
@@ -1347,4 +1426,338 @@ ul { list-style: none; }
   .project-row { grid-template-columns: 40px 1fr 32px; gap: 16px; padding: 24px 20px; }
   .hero-stat-bar { display: none; }
   .about-detail-item { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* ── Reveal failsafe ───────────────────────────────────────────────
+   Scroll-revealed elements start at opacity 0. Three ways that can
+   strand content permanently invisible:
+     1. JS never runs      → html has no .js class
+     2. IO never fires     → the 2.5s timer adds .reveal-fallback
+     3. Reduced motion     → the reveal shouldn't animate at all
+   Each case forces the final state. */
+html:not(.js) .skill-card,
+html:not(.js) .project-row,
+html:not(.js) .service-card,
+html:not(.js) .timeline-item,
+html.reveal-fallback .skill-card,
+html.reveal-fallback .project-row,
+html.reveal-fallback .service-card,
+html.reveal-fallback .timeline-item {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-card,
+  .project-row,
+  .service-card,
+  .timeline-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── Site list inside the Website Development project ──────────────
+   Six entries would be a wall of bullets, so each row is a three-part
+   grid: domain, what it is, and whether it is actually live. */
+.project-sites {
+  list-style: none;
+  margin: 16px 0 4px;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.project-sites li {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 14px;
+  background: var(--bg3);
+}
+.project-sites .site-name {
+  font-family: var(--ff-mono);
+  font-size: 0.78rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.project-sites .site-role {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.project-sites .site-state {
+  font-family: var(--ff-mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.project-sites .site-state.is-live { color: var(--accent2); }
+
+@media (max-width: 640px) {
+  .project-sites li {
+    grid-template-columns: 1fr auto;
+    row-gap: 2px;
+  }
+  .project-sites .site-role { grid-column: 1 / -1; }
+}
+
+/* Non-linked project rows keep the arrow column so the grid stays aligned */
+.project-row > .project-arrow:empty { visibility: hidden; }
+div.project-row { cursor: default; }
+.project-info p a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.project-info p a:hover { opacity: 0.75; }
+
+/* ── Hero and stat band ────────────────────────────────────────────
+   100dvh, not 100vh: on iOS Safari the address bar makes 100vh taller
+   than the visible viewport, which pushes the CTA below the fold. */
+.hero { min-height: 100dvh; }
+
+/* ── Hero background: a precision drafting field ────────────────────
+   Concept, not decoration. Graph paper at two scales with survey dots at
+   the major intersections, one soft key light, and a single slow sweep
+   passing across it. It reads as measured and technical, which is the
+   claim the page is making, and nothing in it moves fast enough to pull
+   the eye off the name. */
+
+/* The old ::before / ::after glows duplicated what the key light below now
+   does. Stacking both is how the hero ended up with six competing layers. */
+.hero::before,
+.hero::after { display: none; }
+
+/* Key light. Two fields only: a warm-blue key behind the type and a cool
+   fill from the opposite corner, so the centre has the most light. */
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.aurora-field {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  will-change: transform;
+}
+.aurora-field.af1 {
+  width: 86vw; height: 86vw;
+  top: -30vw; left: 50%; margin-left: -43vw;
+  background: radial-gradient(circle, rgba(107,164,255,0.16) 0%, rgba(107,164,255,0.05) 40%, transparent 66%);
+  animation: aurora-a 54s ease-in-out infinite alternate;
+}
+.aurora-field.af2 {
+  width: 58vw; height: 58vw;
+  bottom: -24vw; right: -10vw;
+  background: radial-gradient(circle, rgba(52,211,153,0.10) 0%, rgba(52,211,153,0.035) 45%, transparent 70%);
+  animation: aurora-b 67s ease-in-out infinite alternate;
+}
+@keyframes aurora-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(0, 4vh, 0) scale(1.1); }
+}
+@keyframes aurora-b {
+  from { transform: translate3d(0, 0, 0) scale(1.06); }
+  to   { transform: translate3d(-6vw, -5vh, 0) scale(1); }
+}
+
+/* interactions.css forces these to position: relative, which cancels
+   inset: 0 and collapses them to zero height, so neither had ever
+   rendered. Higher specificity puts them back, full-bleed behind content. */
+.hero .hero-grid-lines,
+.hero .hero-noise,
+.hero .hero-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* The drafting field itself: 24px minor rule, 120px major rule, and a
+   survey dot pinned to every major intersection. */
+.hero .hero-grid-lines {
+  background-image:
+    radial-gradient(circle at 0 0, rgba(150,185,255,0.20) 1.3px, transparent 1.7px),
+    linear-gradient(rgba(150,185,255,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150,185,255,0.055) 1px, transparent 1px),
+    linear-gradient(rgba(150,185,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150,185,255,0.022) 1px, transparent 1px);
+  background-size:
+    120px 120px,
+    120px 120px, 120px 120px,
+    24px 24px,   24px 24px;
+  /* Fades the field out before it reaches the edges, so it never boxes
+     the hero in or competes with the vignette. */
+  mask-image: radial-gradient(ellipse 72% 62% at 50% 44%, #000 18%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 72% 62% at 50% 44%, #000 18%, transparent 78%);
+}
+
+/* One slow raking light. This is the single moving element, and it is
+   wide and faint enough to register as a change in light rather than as
+   an object crossing the screen. */
+.hero .hero-sweep {
+  inset: -30% -25%;
+  background: linear-gradient(104deg,
+              transparent 40%,
+              rgba(150,190,255,0.045) 49%,
+              rgba(150,190,255,0.055) 51%,
+              transparent 60%);
+  animation: hero-sweep 26s linear infinite;
+  will-change: transform;
+}
+@keyframes hero-sweep {
+  from { transform: translate3d(-55%, 0, 0); }
+  to   { transform: translate3d(55%, 0, 0); }
+}
+
+/* Edges fall away toward the page colour so the centred type is the
+   brightest thing on screen. */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 78% 68% at 50% 45%, transparent 38%, var(--bg) 100%);
+}
+
+/* Grain was at 0.4, the point where texture stops reading as texture and
+   starts reading as noise sitting on the type. */
+.hero .hero-noise { opacity: 0.14; }
+
+[data-theme="light"] .aurora-field.af1 {
+  background: radial-gradient(circle, rgba(37,88,212,0.11) 0%, rgba(37,88,212,0.04) 40%, transparent 66%);
+}
+[data-theme="light"] .aurora-field.af2 {
+  background: radial-gradient(circle, rgba(16,152,110,0.08) 0%, rgba(16,152,110,0.03) 45%, transparent 70%);
+}
+[data-theme="light"] .hero .hero-grid-lines {
+  background-image:
+    radial-gradient(circle at 0 0, rgba(20,50,120,0.20) 1.3px, transparent 1.7px),
+    linear-gradient(rgba(20,50,120,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,50,120,0.07) 1px, transparent 1px),
+    linear-gradient(rgba(20,50,120,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,50,120,0.03) 1px, transparent 1px);
+}
+[data-theme="light"] .hero .hero-sweep {
+  background: linear-gradient(104deg,
+              transparent 40%,
+              rgba(37,88,212,0.035) 49%,
+              rgba(37,88,212,0.045) 51%,
+              transparent 60%);
+}
+[data-theme="light"] .hero .hero-noise { opacity: 0.09; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-field,
+  .hero .hero-sweep { animation: none !important; }
+}
+
+/* ── Centred hero ──────────────────────────────────────────────────
+   The hero is centred on the page axis. Everything inside it has to be
+   centred together, or the stack loses its shared edge and reads as
+   misaligned rather than deliberate. */
+.hero {
+  align-items: center;
+  text-align: center;
+}
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+/* The bio keeps its reading measure but now centres within the column
+   instead of hugging the left edge. */
+.hero-bio { margin-left: auto; margin-right: auto; }
+.hero-actions { justify-content: center; }
+
+/* The stats used to be a strip pinned to the bottom of the hero. A hero is
+   capped at four text elements, and a stat/trust strip belongs in its own
+   section underneath it, so it now sits here as a normal band. */
+.stat-band {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.stat-band .hero-stat-bar {
+  position: static;
+  border-top: none;
+  background: none;
+  backdrop-filter: none;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+/* Theme-toggle icons, swapped in from emoji */
+.toggle-thumb .icon-moon,
+.toggle-thumb .icon-sun {
+  position: absolute;
+  color: var(--bg);
+}
+
+/* ── Interaction states ────────────────────────────────────────────
+   The page previously had no :active feedback, no focus rings, and
+   ungated hover transforms that stick on touch devices. */
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.btn-primary:active,
+.btn-ghost:active,
+.nav-cta:active,
+.theme-toggle:active,
+.form-submit:active,
+.contact-link-item:active,
+a.project-row:active {
+  transform: scale(0.97);
+  transition-duration: 0.12s;
+}
+
+/* Hover transforms only where a real pointer exists. On touch these
+   latch on after a tap and never clear. */
+@media (hover: none), (pointer: coarse) {
+  .skill-card:hover,
+  .project-row:hover,
+  .service-card:hover,
+  .timeline-item:hover,
+  .btn-primary:hover,
+  .btn-ghost:hover,
+  .nav-cta:hover,
+  .contact-link-item:hover {
+    transform: none;
+  }
+}
+
+/* The old mobile rule hid the stat bar because it was hero decoration.
+   It is a real content section now, so it stays, stacked. */
+@media (max-width: 600px) {
+  .stat-band .hero-stat-bar { display: flex; justify-content: flex-start; gap: 8px; }
+  .stat-band .hero-stat-div { display: none; }
+  .stat-band .hero-stat { padding: 14px 20px 14px 0; }
+}
+
+/* Touch targets.
+   .nav-cta is deliberately excluded: it is display:none below 900px and the
+   hamburger takes over, so giving it display:flex here un-hid it and put a
+   second Contact button in the mobile bar. */
+@media (max-width: 900px) {
+  .mm-link,
+  .mm-cta,
+  .contact-link-item { min-height: 44px; display: flex; align-items: center; }
+  .theme-toggle { min-width: 44px; min-height: 44px; }
+  .nav-cta { display: none; }
 }

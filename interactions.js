@@ -215,6 +215,12 @@
       this.dot  = document.getElementById('cursor-dot');
       this.ring = document.getElementById('cursor-ring');
       if (!this.dot || !this.ring) return;
+      /* Only run on a real pointer, and never when the user asked for less
+         motion. The class is what unlocks `cursor: none` in the CSS, so if
+         we bail here the native cursor simply stays. */
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      document.documentElement.classList.add('custom-cursor');
       this.mx = 0; this.my = 0;
       this.rx = 0; this.ry = 0;
       this._bind();
@@ -285,7 +291,7 @@
          Characters scramble then resolve on hover.
   ══════════════════════════════════════════════════════════════ */
   function initGlitch () {
-    const CHARS = '!<>-_\\/[]{}—=+*^?#@~|';
+    const CHARS = '!<>-_\\/[]{}=+*^?#@~|';
     document.querySelectorAll('.section-label').forEach(el => {
       const orig = (el.firstChild?.nodeType === 3)
         ? el.firstChild.textContent.trim()
@@ -367,7 +373,9 @@
   ══════════════════════════════════════════════════════════════ */
 
   /* Cursor runs immediately — defer guarantees DOM is parsed */
-  try { new CustomCursor(); } catch (e) { console.warn('Cursor:', e); }
+  /* CustomCursor intentionally not started: the site uses the native
+     pointer. The class below is dead code kept only to avoid renumbering
+     the boot sequence; nothing references it. */
 
   document.addEventListener('DOMContentLoaded', () => {
     try { new CyberCanvas();  } catch (e) { console.warn('Canvas:', e); }

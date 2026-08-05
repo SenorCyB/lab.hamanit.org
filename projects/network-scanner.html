@@ -2,7 +2,8 @@
 <html lang="en" data-theme="dark">
 <head>
 <script>
-  /* Theme — runs immediately to prevent flash */
+  document.documentElement.classList.add('js');
+  /* Theme, runs immediately to prevent flash */
   (function () {
     var root  = document.documentElement;
     var saved = localStorage.getItem('hamanit-theme') || 'dark';
@@ -19,10 +20,17 @@
     });
   }());
 
-  /* Nav scroll shrink */
-  window.addEventListener('scroll', function () {
+  /* Nav scroll shrink, via IntersectionObserver sentinel (no scroll listener) */
+  document.addEventListener('DOMContentLoaded', function () {
     var nav = document.getElementById('nav');
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+    if (!nav) return;
+    var sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:40px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(function (entries) {
+      nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }).observe(sentinel);
   });
 
   /* Hamburger / mobile menu */
@@ -49,11 +57,10 @@
   <meta name="description" content="Custom PC builds designed around user needs, budget, performance goals, and long-term reliability." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../interactions.css" />
-  <link rel="stylesheet" href="../project-page.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@300..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css?v=20260804g" />
+  <link rel="stylesheet" href="../interactions.css?v=20260804g" />
+  <link rel="stylesheet" href="project-page.css?v=20260804g" />
   <style>
     /* ── Page-level overrides: light theme vars (scoped, not forced) ── */
     [data-theme="light"] {
@@ -495,10 +502,21 @@
       height: 3px;
       background: linear-gradient(90deg, #0071e3, #34aadc);
       z-index: 9999;
-      width: 0%;
-      transition: width 0.1s linear;
+      width: 100%;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
       border-radius: 0 2px 2px 0;
     }
+    /* Driven by CSS scroll-driven animation. Where unsupported the bar stays
+       at scaleX(0), i.e. simply absent, rather than stuck at a wrong value. */
+    @supports (animation-timeline: scroll()) {
+      #scroll-progress {
+        animation: progress-grow linear both;
+        animation-timeline: scroll(root block);
+      }
+      @keyframes progress-grow { to { transform: scaleX(1); } }
+    }
+    @media (prefers-reduced-motion: reduce) { #scroll-progress { display: none; } }
 
     /* ── Image lightbox ── */
     .lightbox {
@@ -571,6 +589,14 @@
       transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
     }
     .anim-up.in-view { opacity: 1; transform: translateY(0); }
+    /* Reveal failsafe: no JS, or an observer that never fires in a hidden
+       webview, must not leave the page permanently blank. */
+    html:not(.js) .anim-up,
+    html.reveal-fallback .anim-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+      .anim-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .particle { display: none; }
+    }
 
     /* ── Responsive ── */
     @media (max-width: 900px) {
@@ -595,7 +621,7 @@
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <div class="lightbox-inner">
-    <img id="lightbox-img" src="" alt="" />
+    <img id="lightbox-img" alt="" />
     <button class="lightbox-close" id="lightbox-close" aria-label="Close">
       <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
@@ -608,15 +634,15 @@
     <li><a href="../index.html#about">About</a></li>
     <li><a href="../index.html#skills">Skills</a></li>
     <li><a href="../index.html#projects">Projects</a></li>
-    <li><a href="../index.html#services">Services</a></li>
+    <li><a href="../index.html#certifications">Certifications</a></li>
     <li><a href="../index.html#experience">Experience</a></li>
     <li><a href="../Joshua_Haman_Resume.pdf" target="_blank">Résumé</a></li>
   </ul>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
     <div class="toggle-track">
       <div class="toggle-thumb">
-        <span class="icon-moon">🌙</span>
-        <span class="icon-sun">☀️</span>
+        <svg class="icon-moon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
       </div>
     </div>
   </button>
@@ -631,7 +657,7 @@
   <a href="../index.html#about"     class="mm-link">About</a>
   <a href="../index.html#skills"    class="mm-link">Skills</a>
   <a href="../index.html#projects"  class="mm-link">Projects</a>
-  <a href="../index.html#services"  class="mm-link">Services</a>
+  <a href="../index.html#certifications"  class="mm-link">Certifications</a>
   <a href="../index.html#experience" class="mm-link">Experience</a>
   <a href="../Joshua_Haman_Resume.pdf" class="mm-link" target="_blank">Résumé</a>
   <a href="../index.html#contact"   class="mm-cta">Get in Touch →</a>
@@ -654,7 +680,7 @@
         Custom PC Builds &amp;<br><span class="hl">Hardware Optimization</span>
       </h1>
       <p class="project-hero-sub">
-        Turning ideas into high-performance systems &mdash; built around real goals, real budgets, and real people.
+        Turning ideas into high-performance systems, built around real goals, real budgets, and real people.
       </p>
       <div class="hero-tags">
         <span class="hero-tag" data-tip="System architecture & parts selection">PC Hardware</span>
@@ -701,7 +727,7 @@
         <div class="section-eyebrow">What I Do</div>
         <h2 class="block-title">Build Process</h2>
         <p style="font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:20px;">
-          Every build starts with a conversation. I like understanding how the system will actually be used &mdash; what performance matters most, what aesthetic the person wants, and where the budget should flex. From there, I translate that into a practical parts list and build plan.
+          Every build starts with a conversation. I like understanding how the system will actually be used, what performance matters most, what aesthetic the person wants, and where the budget should flex. From there, I translate that into a practical parts list and build plan.
         </p>
         <ul class="skill-list">
           <li class="skill-item">Consult to understand goals, budget, and intended use</li>
@@ -728,65 +754,6 @@
           <span class="build-badge" data-tip="Find & fix hidden issues">Diagnostics</span>
           <span class="build-badge" data-tip="Max FPS & stability">Tuning</span>
         </div>
-      </div>
-    </div>
-
-    <!-- Gallery -->
-    <div class="gallery-section anim-up">
-      <div class="gallery-header">
-        <div>
-          <div class="section-eyebrow">Build Gallery</div>
-          <h2 class="block-title" style="margin-bottom:0;">Process &amp; Results</h2>
-        </div>
-        <span class="gallery-note">&larr; Drag to explore &rarr; Click to enlarge</span>
-      </div>
-      <div class="swiper projectSwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide project-slide">
-            <img src="../Images/pc-build-1.jpg" alt="PC components selected for a custom build" class="lightbox-trigger" />
-            <div class="project-slide-content">
-              <div class="project-slide-title">Planning the Build</div>
-              <p class="project-slide-text">Parts list and direction based on performance goals, style preferences, and budget.</p>
-            </div>
-          </div>
-          <div class="swiper-slide project-slide">
-            <img src="../Images/pc-build-2.jpg" alt="Custom PC during assembly" class="lightbox-trigger" />
-            <div class="project-slide-content">
-              <div class="project-slide-title">Assembly Process</div>
-              <p class="project-slide-text">Putting the system together with attention to fitment, cooling, and cable routing.</p>
-            </div>
-          </div>
-          <div class="swiper-slide project-slide">
-            <img src="../Images/pc-build-3.jpg" alt="Cable management inside a custom PC" class="lightbox-trigger" />
-            <div class="project-slide-content">
-              <div class="project-slide-title">Cable Management</div>
-              <p class="project-slide-text">Refining the internals so the build looks intentional and supports proper airflow.</p>
-            </div>
-          </div>
-          <div class="swiper-slide project-slide">
-            <img src="../Images/pc-build-4.jpg" alt="Completed custom desktop PC build" class="lightbox-trigger" />
-            <div class="project-slide-content">
-              <div class="project-slide-title">Finished System</div>
-              <p class="project-slide-text">The final build reflects the user's vision while staying grounded in performance.</p>
-            </div>
-          </div>
-          <div class="swiper-slide project-slide">
-            <img src="../Images/pc-build-5.jpg" alt="BIOS monitoring and system setup" class="lightbox-trigger" />
-            <div class="project-slide-content">
-              <div class="project-slide-title">Configuration &amp; Validation</div>
-              <p class="project-slide-text">BIOS setup, driver installation, monitoring, and stability verification.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-controls">
-        <button class="swiper-btn project-prev" aria-label="Previous">
-          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button class="swiper-btn project-next" aria-label="Next">
-          <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
-        <div class="swiper-pagination swiper-pagination-custom"></div>
       </div>
     </div>
 
@@ -875,7 +842,7 @@
     <div class="cta-card anim-up">
       <h3 class="cta-card-title">Why This Project Matters</h3>
       <p class="cta-card-text">
-        This project is about more than assembling parts &mdash; it shows how I communicate with people, understand what they actually need, make smart technical decisions, and turn an idea into a finished system that performs well and feels built with purpose.
+        This project is about more than assembling parts, it shows how I communicate with people, understand what they actually need, make smart technical decisions, and turn an idea into a finished system that performs well and feels built with purpose.
       </p>
     </div>
 
@@ -903,7 +870,7 @@
       <a href="../index.html#about">About</a>
       <a href="../index.html#skills">Skills</a>
       <a href="../index.html#projects">Projects</a>
-      <a href="../index.html#services">Services</a>
+      <a href="../index.html#certifications">Certifications</a>
       <a href="../index.html#experience">Experience</a>
       <a href="../index.html#contact">Contact</a>
     </nav>
@@ -911,32 +878,10 @@
   </div>
 </footer>
 
-<div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
-  <script src="../interactions.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="../interactions.js?v=20260804g" defer></script>
 <script>
-  const projectSwiper = new Swiper(".projectSwiper", {
-    slidesPerView: 1.08,
-    spaceBetween: 18,
-    grabCursor: true,
-    loop: false,
-    speed: 700,
-    keyboard: { enabled: true },
-    navigation: { nextEl: ".project-next", prevEl: ".project-prev" },
-    pagination: { el: ".swiper-pagination-custom", type: "fraction" },
-    breakpoints: {
-      640:  { slidesPerView: 1.3, spaceBetween: 18 },
-      900:  { slidesPerView: 2,   spaceBetween: 20 },
-      1200: { slidesPerView: 2.2, spaceBetween: 22 }
-    }
-  });
-
-  const prog = document.getElementById('scroll-progress');
-  window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
-    prog.style.width = pct + '%';
-  }, { passive: true });
+  /* Scroll progress bar is driven by CSS scroll-driven animation, see the
+     @supports block in the page styles. No scroll listener needed. */
 
   const animEls = document.querySelectorAll('.anim-up');
   const io = new IntersectionObserver((entries) => {
@@ -948,6 +893,15 @@
     });
   }, { threshold: 0.08 });
   animEls.forEach(el => io.observe(el));
+
+  /* Reveal failsafe: hidden webviews suspend IntersectionObserver, which would
+     leave every block stuck at opacity 0. */
+  setTimeout(function () {
+    if (!document.querySelector('.anim-up.in-view')) {
+      document.documentElement.classList.add('reveal-fallback');
+    }
+  }, 2500);
+
 
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lightbox-img');

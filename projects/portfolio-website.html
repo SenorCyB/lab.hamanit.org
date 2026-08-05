@@ -2,6 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
 <script>
+  document.documentElement.classList.add('js');
   (function () {
     var root  = document.documentElement;
     var saved = localStorage.getItem('hamanit-theme') || 'dark';
@@ -16,9 +17,17 @@
       });
     });
   }());
-  window.addEventListener('scroll', function () {
+  /* Nav scroll shrink, via IntersectionObserver sentinel (no scroll listener) */
+  document.addEventListener('DOMContentLoaded', function () {
     var nav = document.getElementById('nav');
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+    if (!nav) return;
+    var sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:40px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(function (entries) {
+      nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }).observe(sentinel);
   });
   document.addEventListener('DOMContentLoaded', function () {
     var hamburger  = document.getElementById('hamburger');
@@ -39,14 +48,14 @@
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web Development | HAMAN IT</title>
-  <meta name="description" content="Custom website design and development &#8212; client work, redesigns, and full-stack deployments including brooksiderealty.com." />
+  <title>Website Development | HAMAN IT</title>
+  <meta name="description" content="Six sites built by hand for my own brands and for local businesses, across GitHub Pages, Netlify, and Bluehost. No page builders, no frameworks." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../styles.css" />
-  <link rel="stylesheet" href="../interactions.css" />
-  <link rel="stylesheet" href="../project-page.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@300..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css?v=20260804g" />
+  <link rel="stylesheet" href="../interactions.css?v=20260804g" />
+  <link rel="stylesheet" href="project-page.css?v=20260804g" />
   <style>
     .project-hero {
       background: linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
@@ -114,9 +123,20 @@
     #scroll-progress {
       position: fixed; top: 0; left: 0; height: 3px;
       background: linear-gradient(90deg, #0071e3, #34aadc);
-      z-index: 9999; width: 0%; transition: width 0.1s linear;
+      z-index: 9999; width: 100%;
+      transform: scaleX(0); transform-origin: 0 50%;
       border-radius: 0 2px 2px 0;
     }
+    /* Driven by CSS scroll-driven animation. Where unsupported the bar stays
+       at scaleX(0), i.e. simply absent, rather than stuck at a wrong value. */
+    @supports (animation-timeline: scroll()) {
+      #scroll-progress {
+        animation: progress-grow linear both;
+        animation-timeline: scroll(root block);
+      }
+      @keyframes progress-grow { to { transform: scaleX(1); } }
+    }
+    @media (prefers-reduced-motion: reduce) { #scroll-progress { display: none; } }
 
     /* ── Stats ── */
     .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 40px 0; }
@@ -153,6 +173,110 @@
     }
     .section-eyebrow::before { content: ''; display: block; width: 20px; height: 2px; border-radius: 1px; background: var(--accent); }
     .block-title { font-size: 19px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); margin-bottom: 14px; }
+
+    /* ── Per-site breakdown ── */
+    .sites-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 2px 16px var(--accent-glow);
+      margin-bottom: 24px;
+    }
+    .site-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .site-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--bg);
+      padding: 22px;
+    }
+    .site-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .site-card-title {
+      font-family: var(--ff-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      overflow-wrap: anywhere;
+    }
+    /* Only the four reachable sites are links. The two in-progress builds stay
+       plain text: cinelorente has not had its DNS moved yet, and the coatings
+       domain still serves the owner's old site, so linking either would send
+       people somewhere that is not this work. */
+    a.site-card-title.is-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease, opacity 0.2s ease;
+    }
+    a.site-card-title.is-link svg {
+      width: 12px; height: 12px; flex-shrink: 0;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    a.site-card-title.is-link:active { opacity: 0.7; }
+    @media (hover: hover) and (pointer: fine) {
+      a.site-card-title.is-link:hover { border-bottom-color: currentColor; }
+    }
+    .site-chip {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--faint);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 9px;
+      white-space: nowrap;
+    }
+    .site-chip.is-live {
+      color: var(--accent2, #34d399);
+      border-color: color-mix(in srgb, var(--accent2, #34d399) 35%, transparent);
+    }
+    .site-card-role {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .site-card-text {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .site-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+    .site-meta span {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border, var(--border2));
+      border-radius: 999px;
+      padding: 3px 9px;
+    }
+    @media (max-width: 900px) {
+      .site-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .sites-section { padding: 20px; }
+      .site-card { padding: 18px; }
+    }
     .skill-list { gap: 12px; }
     .skill-item { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
@@ -295,6 +419,14 @@
       transition: opacity 0.7s var(--transition), transform 0.7s var(--transition);
     }
     .anim-up.in-view { opacity: 1; transform: translateY(0); }
+    /* Reveal failsafe: no JS, or an observer that never fires in a hidden
+       webview, must not leave the page permanently blank. */
+    html:not(.js) .anim-up,
+    html.reveal-fallback .anim-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+      .anim-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .particle { display: none; }
+    }
     @media (max-width: 900px) {
       .stat-row { grid-template-columns: repeat(2, 1fr); }
       .detail-grid { grid-template-columns: 1fr; }
@@ -322,12 +454,12 @@
     <li><a href="../index.html#about">About</a></li>
     <li><a href="../index.html#skills">Skills</a></li>
     <li><a href="../index.html#projects">Projects</a></li>
-    <li><a href="../index.html#services">Services</a></li>
+    <li><a href="../index.html#certifications">Certifications</a></li>
     <li><a href="../index.html#experience">Experience</a></li>
     <li><a href="../Joshua_Haman_Resume.pdf" target="_blank">R&#233;sum&#233;</a></li>
   </ul>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
-    <div class="toggle-track"><div class="toggle-thumb"><span class="icon-moon">&#127769;</span><span class="icon-sun">&#9728;&#65039;</span></div></div>
+    <div class="toggle-track"><div class="toggle-thumb"><svg class="icon-moon" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div></div>
   </button>
   <a href="../index.html#contact" class="nav-cta">Get in Touch</a>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu"><span></span><span></span></button>
@@ -337,7 +469,7 @@
   <a href="../index.html#about"      class="mm-link">About</a>
   <a href="../index.html#skills"     class="mm-link">Skills</a>
   <a href="../index.html#projects"   class="mm-link">Projects</a>
-  <a href="../index.html#services"   class="mm-link">Services</a>
+  <a href="../index.html#certifications"   class="mm-link">Certifications</a>
   <a href="../index.html#experience" class="mm-link">Experience</a>
   <a href="../Joshua_Haman_Resume.pdf" class="mm-link" target="_blank">R&#233;sum&#233;</a>
   <a href="../index.html#contact"    class="mm-cta">Get in Touch &#8594;</a>
@@ -352,21 +484,21 @@
         <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
         <a href="../index.html#projects">Projects</a>
         <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-        <span>Web Development</span>
+        <span>Website Development</span>
       </nav>
       <h1 class="project-hero-title">
-        Custom Website<br><span class="hl">Design &amp; Development</span>
+        Website<br><span class="hl">Development</span>
       </h1>
       <p class="project-hero-sub">
-        End-to-end website work for real clients &#8212; from understanding what they actually need, to designing something that fits their brand, to deploying and handing off a polished, live site they can rely on.
+        Six sites built by hand for my own brands and for local businesses. No page builders and no frameworks, deployed across three different hosts depending on what each client actually needed.
       </p>
       <div class="hero-tags">
         <span class="hero-tag">HTML / CSS / JS</span>
         <span class="hero-tag">Client Work</span>
         <span class="hero-tag">Responsive Design</span>
         <span class="hero-tag">DNS &amp; Hosting</span>
+        <span class="hero-tag">Netlify</span>
         <span class="hero-tag">GitHub Pages</span>
-        <span class="hero-tag">Custom Domains</span>
       </div>
     </div>
   </header>
@@ -375,8 +507,8 @@
     <div class="stat-row anim-up">
       <div class="stat-card" tabindex="0">
         <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <div class="stat-label">Client Sites</div>
-        <div class="stat-value">Real Clients, Live Sites</div>
+        <div class="stat-label">Sites Built</div>
+        <div class="stat-value">6 total, 4 live today</div>
       </div>
       <div class="stat-card" tabindex="0">
         <div class="stat-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
@@ -385,8 +517,8 @@
       </div>
       <div class="stat-card" tabindex="0">
         <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-        <div class="stat-label">Deployment</div>
-        <div class="stat-value">GitHub Pages + DNS</div>
+        <div class="stat-label">Hosting</div>
+        <div class="stat-value">GitHub Pages, Netlify, Bluehost</div>
       </div>
       <div class="stat-card" tabindex="0">
         <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
@@ -404,15 +536,15 @@
         <div class="section-eyebrow">What I Do</div>
         <h2 class="block-title">Website Work for Real Clients</h2>
         <p style="font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:20px;">
-          Building websites for clients is a different challenge than building your own. Every project starts with listening &#8212; understanding the client&#x27;s business, what&#x27;s broken about what they have, what they wish it did, and what they&#x27;re trying to communicate to their customers.
+          Building websites for clients is a different challenge than building your own. Every project starts with listening, understanding the client&#x27;s business, what&#x27;s broken about what they have, what they wish it did, and what they&#x27;re trying to communicate to their customers.
         </p>
         <p style="font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:20px;">
-          From that brief, I design and build a custom site: no templates, no builders. Hand-written HTML, CSS, and JavaScript &#8212; responsive across every device, fast-loading, and built to be easy to maintain. Then I handle hosting, DNS, domain setup, and deployment so the client can focus on their business.
+          From that brief, I design and build a custom site: no templates, no builders. Hand-written HTML, CSS, and JavaScript, responsive across every device, fast-loading, and built to be easy to maintain. Then I handle hosting, DNS, domain setup, and deployment so the client can focus on their business.
         </p>
         <ul class="skill-list">
           <li class="skill-item">Client intake: understanding goals, brand, and audience before writing a line of code</li>
           <li class="skill-item">Custom design that matches the client&#x27;s identity, not a generic template</li>
-          <li class="skill-item">Fully responsive &#8212; every layout tested on mobile, tablet, and desktop</li>
+          <li class="skill-item">Fully responsive, every layout tested on mobile, tablet, and desktop</li>
           <li class="skill-item">Deployment, domain registration, DNS configuration, and HTTPS setup</li>
           <li class="skill-item">Handoff with documentation the client can actually use</li>
         </ul>
@@ -421,12 +553,12 @@
         <div class="section-eyebrow">Tech Stack</div>
         <h2 class="block-title">How I Build</h2>
         <ul class="skill-list" style="margin-bottom:20px;">
-          <li class="skill-item"><strong style="color:var(--text);">HTML5</strong> &#8212; semantic structure built for accessibility and SEO</li>
-          <li class="skill-item"><strong style="color:var(--text);">CSS</strong> &#8212; custom properties, flexbox/grid, responsive breakpoints</li>
-          <li class="skill-item"><strong style="color:var(--text);">JavaScript</strong> &#8212; vanilla, no bloated frameworks</li>
-          <li class="skill-item"><strong style="color:var(--text);">GitHub Pages</strong> &#8212; reliable, fast, free static hosting</li>
-          <li class="skill-item"><strong style="color:var(--text);">DNS &amp; Domains</strong> &#8212; A records, CNAMEs, custom domain + HTTPS</li>
-          <li class="skill-item"><strong style="color:var(--text);">Git</strong> &#8212; version control throughout, clean commit history</li>
+          <li class="skill-item"><strong style="color:var(--text);">HTML5</strong>: semantic structure built for accessibility and SEO</li>
+          <li class="skill-item"><strong style="color:var(--text);">CSS</strong>: custom properties, flexbox/grid, responsive breakpoints</li>
+          <li class="skill-item"><strong style="color:var(--text);">JavaScript</strong>: vanilla, no bloated frameworks</li>
+          <li class="skill-item"><strong style="color:var(--text);">GitHub Pages</strong>: reliable, fast, free static hosting</li>
+          <li class="skill-item"><strong style="color:var(--text);">DNS &amp; Domains</strong>: A records, CNAMEs, custom domain + HTTPS</li>
+          <li class="skill-item"><strong style="color:var(--text);">Git</strong>: version control throughout, clean commit history</li>
         </ul>
         <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
           <span class="build-badge">Responsive</span>
@@ -437,11 +569,108 @@
       </div>
     </div>
 
+    <!-- The sites -->
+    <div class="sites-section anim-up">
+      <div class="section-eyebrow">The Work</div>
+      <h2 class="block-title" style="margin-bottom:6px;">Every Site, and What Each One Taught Me</h2>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6; margin-bottom:4px;">
+        Six builds. Each one picked a different host, a different type face, and a different set of constraints, because the client decided those, not me.
+      </p>
+
+      <div class="site-grid">
+
+        <article class="site-card">
+          <header class="site-card-head">
+            <a class="site-card-title is-link" href="https://lab.hamanit.org" target="_blank" rel="noopener">lab.hamanit.org<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            <span class="site-chip is-live">Live</span>
+          </header>
+          <p class="site-card-role">Personal portfolio and technical lab. This site.</p>
+          <p class="site-card-text">
+            Hosted on GitHub Pages with a CNAME for the custom domain, so deployment is a git push. Dark and light themes persist in localStorage, and the hero runs a custom canvas circuit animation that pauses itself when it scrolls out of view.
+          </p>
+          <div class="site-meta">
+            <span>GitHub Pages</span><span>Geist + Geist Mono</span><span>Canvas animation</span>
+          </div>
+        </article>
+
+        <article class="site-card">
+          <header class="site-card-head">
+            <a class="site-card-title is-link" href="https://hamanit.org" target="_blank" rel="noopener">hamanit.org<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            <span class="site-chip is-live">Live</span>
+          </header>
+          <p class="site-card-role">HAMIT business site: services, pricing, and lead capture.</p>
+          <p class="site-card-text">
+            The largest build of the six by page count. Home, four service pages, three project pages, plus privacy and terms. Shares its DNA with this portfolio but targets a completely different reader, so it runs a warmer palette and a heavier grotesque.
+          </p>
+          <div class="site-meta">
+            <span>GitHub Pages</span><span>Space Grotesk + Space Mono</span><span>Multi-page</span>
+          </div>
+        </article>
+
+        <article class="site-card">
+          <header class="site-card-head">
+            <a class="site-card-title is-link" href="https://1cachouston.com" target="_blank" rel="noopener">1cachouston.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            <span class="site-chip is-live">Live</span>
+          </header>
+          <p class="site-card-role">1st Choice Auto Credit, a used car dealership in Houston.</p>
+          <p class="site-card-text">
+            Built from scratch with no existing brand to work from, which meant the design direction was mine to set and then justify. Ships as a single HTML file on Netlify, because a dealership landing page does not need a build step to maintain.
+          </p>
+          <div class="site-meta">
+            <span>Netlify</span><span>Single file</span><span>Greenfield brand</span>
+          </div>
+        </article>
+
+        <article class="site-card">
+          <header class="site-card-head">
+            <a class="site-card-title is-link" href="https://brooksiderealtytx.com" target="_blank" rel="noopener">brooksiderealtytx.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            <span class="site-chip is-live">Live</span>
+          </header>
+          <p class="site-card-role">Brookside Realty, a real estate brokerage.</p>
+          <p class="site-card-text">
+            The opposite problem to the dealership. The brand was already locked, so the job was surgical edits rather than a redesign. It lives on Bluehost specifically because the contact form runs on PHP, which the static hosts cannot serve. The host followed the requirement.
+          </p>
+          <div class="site-meta">
+            <span>Bluehost</span><span>HTML + PHP</span><span>Locked brand</span>
+          </div>
+        </article>
+
+        <article class="site-card">
+          <header class="site-card-head">
+            <a class="site-card-title is-link" href="https://cinelorente.com" target="_blank" rel="noopener">cinelorente.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            <span class="site-chip">In progress</span>
+          </header>
+          <p class="site-card-role">Photography brand site. Built, waiting on final photos and a DNS move.</p>
+          <p class="site-card-text">
+            The most demanding build visually. Fonts are self-hosted so the site makes zero third party font requests, and every image ships as a JPEG with a WebP sibling generated by a converter script, which cut mobile gallery weight by roughly half. Nine pages, restructured around what people actually search for.
+          </p>
+          <div class="site-meta">
+            <span>Netlify</span><span>Self-hosted fonts</span><span>WebP pipeline</span><span>SEO restructure</span>
+          </div>
+        </article>
+
+        <article class="site-card">
+          <header class="site-card-head">
+            <a class="site-card-title is-link" href="https://katytxcoatings.com" target="_blank" rel="noopener">katytxcoatings.com<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            <span class="site-chip">In progress</span>
+          </header>
+          <p class="site-card-role">Auto ceramic coating shop. Design reference build, pending the owner's existing code.</p>
+          <p class="site-card-text">
+            Single page, matte black with navy and blue. Includes a drag to compare before and after slider built with clip-path, and a reviews carousel populated from the shop's real Google reviews rather than invented quotes. Every price and package on the page came from the owner verbatim.
+          </p>
+          <div class="site-meta">
+            <span>Single page</span><span>Montserrat + Poppins</span><span>Comparison slider</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
     <!-- Process -->
     <div class="process-section anim-up">
       <div class="section-eyebrow">Process</div>
       <h2 class="block-title" style="margin-bottom:6px;">How a Project Works</h2>
-      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Every client engagement follows the same disciplined process &#8212; from first conversation to launch day.</p>
+      <p style="font-size:14px; color:var(--muted); line-height:1.6;">Every client engagement follows the same disciplined process, from first conversation to launch day.</p>
       <div class="process-grid">
         <div class="process-step">
           <div class="process-num">01</div>
@@ -451,17 +680,17 @@
         <div class="process-step">
           <div class="process-num">02</div>
           <div class="process-title">Design Direction</div>
-          <div class="process-text">Before writing code, I establish visual direction &#8212; color palette, typography, tone, and layout structure. The client signs off on the direction before a single div is written.</div>
+          <div class="process-text">Before writing code, I establish visual direction, color palette, typography, tone, and layout structure. The client signs off on the direction before a single div is written.</div>
         </div>
         <div class="process-step">
           <div class="process-num">03</div>
           <div class="process-title">Build</div>
-          <div class="process-text">Custom HTML, CSS, and JavaScript &#8212; built from scratch for the client&#x27;s specific needs. Responsive layouts, clean code, and optimized assets throughout.</div>
+          <div class="process-text">Custom HTML, CSS, and JavaScript, built from scratch for the client&#x27;s specific needs. Responsive layouts, clean code, and optimized assets throughout.</div>
         </div>
         <div class="process-step">
           <div class="process-num">04</div>
           <div class="process-title">Review &amp; Revise</div>
-          <div class="process-text">The client reviews the build. Feedback is incorporated in focused revision rounds &#8212; keeping scope clear while making sure the result genuinely fits their vision.</div>
+          <div class="process-text">The client reviews the build. Feedback is incorporated in focused revision rounds, keeping scope clear while making sure the result genuinely fits their vision.</div>
         </div>
         <div class="process-step">
           <div class="process-num">05</div>
@@ -472,65 +701,6 @@
           <div class="process-num">06</div>
           <div class="process-title">Handoff &amp; Support</div>
           <div class="process-text">After launch, I provide clear documentation and a walkthrough so the client understands what they own. Ongoing support available for updates, edits, and additions.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Case study -->
-    <div class="case-study anim-up">
-      <div class="case-study-header">
-        <div>
-          <div class="case-label">Featured Project</div>
-          <div class="case-title">Brookside Realty</div>
-          <a href="https://brooksiderealtytx.com" target="_blank" rel="noopener" class="case-url">
-            brooksiderealtytx.com
-            <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        </div>
-        <div class="case-meta">
-          <span class="case-meta-item">Real Estate</span>
-          <span class="case-meta-item">Redesign</span>
-          <span class="case-meta-item">Client Work</span>
-          <span class="case-meta-item">Live Site</span>
-        </div>
-      </div>
-      <div class="case-body">
-        <div class="case-grid">
-          <div>
-            <div class="case-section-label">The Brief</div>
-            <div class="case-text">
-              The client came in with an older website that no longer reflected the quality of their business. It was outdated visually, not mobile-friendly, and doing nothing to convert visitors into inquiries. The ask: rebuild it from scratch with a clean, professional look that would actually earn trust from buyers and sellers.
-            </div>
-            <div class="case-section-label">The Work</div>
-            <div class="case-list">
-              <div class="case-list-item">Held an intake session to understand the client&#x27;s brand, target customers, and goals for the site</div>
-              <div class="case-list-item">Designed a modern, trust-forward layout centered on listings, team credibility, and clear contact CTAs</div>
-              <div class="case-list-item">Built the full site in hand-written HTML, CSS, and JavaScript &#8212; no page builder, no template</div>
-              <div class="case-list-item">Ensured full responsiveness across all screen sizes &#8212; primary traffic is mobile</div>
-              <div class="case-list-item">Optimized load performance: compressed assets, minimal dependencies, fast TTFB</div>
-              <div class="case-list-item">Managed domain setup, DNS configuration, GitHub Pages hosting, and HTTPS certificate</div>
-              <div class="case-list-item">Provided a walkthrough and handoff documentation after launch</div>
-            </div>
-          </div>
-          <div>
-            <div class="case-section-label">Deliverables</div>
-            <div class="case-deliverables">
-              <span class="build-badge">Full site redesign</span>
-              <span class="build-badge">Mobile-first layout</span>
-              <span class="build-badge">Custom CSS design</span>
-              <span class="build-badge">Domain setup</span>
-              <span class="build-badge">DNS config</span>
-              <span class="build-badge">HTTPS</span>
-              <span class="build-badge">GitHub Pages hosting</span>
-              <span class="build-badge">Client handoff</span>
-            </div>
-            <div style="margin-top:28px;">
-              <div class="case-section-label">Result</div>
-              <div class="case-text">
-                A professional, fast-loading real estate site that reflects the quality of the client&#x27;s service. The old site was replaced entirely &#8212; new layout, new visual identity, properly deployed and live at their existing domain.
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -565,7 +735,7 @@
           </div>
           <div class="value-item">
             <div class="value-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-            <div class="value-text"><strong>End-to-end ownership</strong>I handle design, code, hosting, and DNS. The client gets a finished product &#8212; not a half-built handoff.</div>
+            <div class="value-text"><strong>End-to-end ownership</strong>I handle design, code, hosting, and DNS. The client gets a finished product, not a half-built handoff.</div>
           </div>
         </div>
       </div>
@@ -575,7 +745,7 @@
     <div class="cta-card anim-up">
       <h3 class="cta-card-title">Need a Website Built?</h3>
       <p class="cta-card-text">
-        Whether it&#x27;s a full redesign, a new site from scratch, or just getting an existing site properly deployed &#8212; reach out and we&#x27;ll figure out what you need. I take on a limited number of client projects and give each one real attention.
+        Whether it&#x27;s a full redesign, a new site from scratch, or just getting an existing site properly deployed, reach out and we&#x27;ll figure out what you need. I take on a limited number of client projects and give each one real attention.
       </p>
     </div>
 
@@ -600,7 +770,7 @@
       <a href="../index.html#about">About</a>
       <a href="../index.html#skills">Skills</a>
       <a href="../index.html#projects">Projects</a>
-      <a href="../index.html#services">Services</a>
+      <a href="../index.html#certifications">Certifications</a>
       <a href="../index.html#experience">Experience</a>
       <a href="../index.html#contact">Contact</a>
     </nav>
@@ -608,15 +778,10 @@
   </div>
 </footer>
 
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-<script src="../interactions.js" defer></script>
+<script src="../interactions.js?v=20260804g" defer></script>
 <script>
-  const prog = document.getElementById('scroll-progress');
-  window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
-    prog.style.width = pct + '%';
-  }, { passive: true });
+  /* Scroll progress bar is driven by CSS scroll-driven animation, see the
+     @supports block in the page styles. No scroll listener needed. */
 
   const animEls = document.querySelectorAll('.anim-up');
   const io = new IntersectionObserver((entries) => {
@@ -628,6 +793,15 @@
     });
   }, { threshold: 0.08 });
   animEls.forEach(el => io.observe(el));
+
+  /* Reveal failsafe: hidden webviews suspend IntersectionObserver, which would
+     leave every block stuck at opacity 0. */
+  setTimeout(function () {
+    if (!document.querySelector('.anim-up.in-view')) {
+      document.documentElement.classList.add('reveal-fallback');
+    }
+  }, 2500);
+
 
   const container = document.getElementById('hero-particles');
   for (let i = 0; i < 14; i++) {
